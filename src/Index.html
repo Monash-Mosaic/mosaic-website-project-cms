@@ -1388,6 +1388,56 @@ textarea.form-control {
 
 <script>
 
+if (
+  typeof google === 'undefined' ||
+  !google.script ||
+  !google.script.run
+) {
+
+  document.write(
+    '<script src="/dummy/local-dev.js"><\/script>'
+  );
+
+}
+
+</script>
+
+
+
+<style>
+
+.local-dev-banner {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+
+  padding: 8px 16px;
+
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #fde68a;
+  background: #451a03;
+
+  border-bottom: 1px solid #92400e;
+
+}
+
+body.local-dev {
+  padding-top: 36px;
+}
+
+</style>
+
+
+
+<script>
+
 
 let projects = [];
 
@@ -1402,8 +1452,32 @@ let editMode = false;
 
 document.addEventListener(
   'DOMContentLoaded',
-  loadProjects
+  () => {
+
+    if (window.__CMS_LOCAL_DEV__) {
+      showLocalDevBanner();
+    }
+
+    loadProjects();
+
+  }
 );
+
+
+
+function showLocalDevBanner() {
+
+  document.body.classList.add('local-dev');
+
+  const banner = document.createElement('div');
+
+  banner.className = 'local-dev-banner';
+  banner.textContent =
+    'Local dev mode — using dummy data from /dummy/data/dashboard.json';
+
+  document.body.prepend(banner);
+
+}
 
 
 
