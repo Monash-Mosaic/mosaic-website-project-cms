@@ -5,7 +5,7 @@ Google Apps Script CMS for managing website projects with draft, approval, rejec
 ## Data Model
 
 - `Projects`: `projectId`, `currentVersion`, `createdAt`, `createdBy`, `archived`
-- `ProjectVersions`: versioned project content and approval state
+- `ProjectVersions`: `versionId`, `projectId`, `version`, `name`, `subtitle`, description, image, link, status, and approval fields
 - `Users`: `email`, `role`, `active`
 - `AuditLog`: immutable activity history
 

@@ -141,6 +141,7 @@
           latestVersionId: latestVersion.versionId,
           latestVersion: Number(latestVersion.version),
           name: latestVersion.name,
+          subtitle: latestVersion.subtitle || '',
           description: latestVersion.description,
           imageFileId: latestVersion.imageFileId,
           imageUrl: latestVersion.imageUrl,
@@ -211,6 +212,7 @@
     return {
       projectId: String(form.projectId?.value || '').trim(),
       name: String(form.name?.value || '').trim(),
+      subtitle: String(form.subtitle?.value || '').trim(),
       description: String(form.description?.value || '').trim(),
       link: String(form.link?.value || '').trim(),
       image: imageFile
@@ -302,6 +304,10 @@
               throw new Error('Project name is required.');
             }
 
+            if (!values.subtitle) {
+              throw new Error('Project subtitle is required.');
+            }
+
             if (!values.description) {
               throw new Error(
                 'Project description is required.'
@@ -333,6 +339,7 @@
               projectId,
               version: 1,
               name: values.name,
+              subtitle: values.subtitle,
               description: values.description,
               imageFileId: `dummy-${projectId}`,
               imageUrl,
@@ -381,6 +388,24 @@
               throw new Error('Project not found.');
             }
 
+            if (!values.name) {
+              throw new Error('Project name is required.');
+            }
+
+            if (!values.subtitle) {
+              throw new Error('Project subtitle is required.');
+            }
+
+            if (!values.description) {
+              throw new Error(
+                'Project description is required.'
+              );
+            }
+
+            if (!values.link) {
+              throw new Error('Project link is required.');
+            }
+
             const projectVersions =
               getProjectVersions(values.projectId);
 
@@ -414,6 +439,7 @@
               projectId: project.projectId,
               version: nextVersion,
               name: values.name,
+              subtitle: values.subtitle,
               description: values.description,
               imageFileId,
               link: values.link,
@@ -541,6 +567,7 @@
               projectId,
               version: nextVersion,
               name: sourceVersion.name,
+              subtitle: sourceVersion.subtitle || '',
               description: sourceVersion.description,
               imageFileId: sourceVersion.imageFileId,
               imageUrl: sourceVersion.imageUrl,

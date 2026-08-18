@@ -11,6 +11,10 @@ function createProject(form) {
       throw new Error('Project name is required.');
     }
 
+    if (!form.subtitle || !String(form.subtitle).trim()) {
+      throw new Error('Project subtitle is required.');
+    }
+
     if (
       !form.description ||
       !String(form.description).trim()
@@ -60,6 +64,7 @@ function createProject(form) {
       projectId,
       1,
       String(form.name).trim(),
+      String(form.subtitle).trim(),
       String(form.description).trim(),
       image.fileId,
       '',
@@ -136,6 +141,7 @@ function getDashboardProjects() {
         latestVersion: Number(latestVersion.version),
 
         name: latestVersion.name,
+        subtitle: latestVersion.subtitle || '',
         description: latestVersion.description,
 
         imageFileId: latestVersion.imageFileId,
@@ -196,6 +202,10 @@ function updateProject(form) {
 
     if (!form.name || !String(form.name).trim()) {
       throw new Error('Project name is required.');
+    }
+
+    if (!form.subtitle || !String(form.subtitle).trim()) {
+      throw new Error('Project subtitle is required.');
     }
 
     if (
@@ -302,6 +312,7 @@ function updateProject(form) {
       nextVersionNumber,
 
       String(form.name).trim(),
+      String(form.subtitle).trim(),
 
       String(form.description).trim(),
 
@@ -374,6 +385,7 @@ function getPublishedProjects_() {
       return {
         id: project.projectId,
         name: version.name,
+        subtitle: version.subtitle || '',
         description: version.description,
         image: getProjectImageUrl_(
           version.imageFileId

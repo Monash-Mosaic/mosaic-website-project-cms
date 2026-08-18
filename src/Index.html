@@ -1610,6 +1610,29 @@ textarea {
 }
 
 
+.project-subtitle {
+
+  color:
+    var(--muted);
+
+  font-size:
+    14px;
+
+  font-weight:
+    500;
+
+  margin-top:
+    -6px;
+
+  margin-bottom:
+    10px;
+
+  line-height:
+    1.4;
+
+}
+
+
 .project-description {
 
   color:
@@ -3013,7 +3036,7 @@ textarea.form-control {
 
     <div class="toolbar-copy">
       <p>
-        Search by entry name or description.
+        Search by entry name, subtitle, or description.
       </p>
     </div>
 
@@ -3168,6 +3191,24 @@ textarea.form-control {
           class="form-control"
           name="name"
           id="name"
+          required
+        >
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label>
+          Subtitle
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          name="subtitle"
+          id="subtitle"
           required
         >
 
@@ -4029,6 +4070,12 @@ function renderProjects() {
 
           ||
 
+          String(project.subtitle || '')
+            .toLowerCase()
+            .includes(query)
+
+          ||
+
           project.description
             .toLowerCase()
             .includes(query)
@@ -4290,6 +4337,15 @@ function createProjectCard(project) {
         </div>
 
 
+        ${
+          project.subtitle
+            ? `<div class="project-subtitle">
+                ${escapeHtml(project.subtitle)}
+              </div>`
+            : ''
+        }
+
+
         <div class="project-description">
 
           ${escapeHtml(
@@ -4536,7 +4592,7 @@ function openCreateDrawer() {
   document.getElementById(
     'drawerTitle'
   ).nextElementSibling.innerText =
-    'Create a draft entry with a title, description, link, and WebP cover image.';
+    'Create a draft entry with a title, subtitle, description, link, and WebP cover image.';
 
 
   const form =
@@ -4617,6 +4673,12 @@ function openEditDrawer(
     'name'
   ).value =
     project.name;
+
+
+  document.getElementById(
+    'subtitle'
+  ).value =
+    project.subtitle || '';
 
 
   document.getElementById(

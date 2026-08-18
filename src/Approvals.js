@@ -361,6 +361,7 @@ function requestArchive(projectId) {
       nextVersion,
 
       sourceVersion.name,
+      sourceVersion.subtitle || '',
       sourceVersion.description,
       sourceVersion.imageFileId,
       sourceVersion.imageUrl,
