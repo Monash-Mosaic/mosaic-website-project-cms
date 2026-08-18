@@ -21,5 +21,11 @@ const CONFIG = {
     CREATE: 'CREATE',
     UPDATE: 'UPDATE',
     ARCHIVE: 'ARCHIVE'
+  },
+
+  ROLES: {
+    ADMIN: 'ADMIN',
+    VIEWER: 'VIEWER',
+    CREATOR: 'CREATOR'
   }
 };

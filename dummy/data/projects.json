@@ -1,0 +1,44 @@
+[
+  {
+    "projectId": "PRJ-live-001",
+    "currentVersion": 2,
+    "createdAt": "2026-03-12T09:00:00.000Z",
+    "createdBy": "creator@monash.edu",
+    "archived": "FALSE"
+  },
+  {
+    "projectId": "PRJ-pending-002",
+    "currentVersion": "",
+    "createdAt": "2026-08-01T11:20:00.000Z",
+    "createdBy": "creator@monash.edu",
+    "archived": "FALSE"
+  },
+  {
+    "projectId": "PRJ-draft-003",
+    "currentVersion": "",
+    "createdAt": "2026-08-10T16:45:00.000Z",
+    "createdBy": "creator@monash.edu",
+    "archived": "FALSE"
+  },
+  {
+    "projectId": "PRJ-rejected-004",
+    "currentVersion": 1,
+    "createdAt": "2026-05-04T08:15:00.000Z",
+    "createdBy": "creator@monash.edu",
+    "archived": "FALSE"
+  },
+  {
+    "projectId": "PRJ-archive-005",
+    "currentVersion": 2,
+    "createdAt": "2025-11-20T10:00:00.000Z",
+    "createdBy": "creator@monash.edu",
+    "archived": "FALSE"
+  },
+  {
+    "projectId": "PRJ-archived-006",
+    "currentVersion": 1,
+    "createdAt": "2025-06-01T08:00:00.000Z",
+    "createdBy": "creator@monash.edu",
+    "archived": "TRUE"
+  }
+]

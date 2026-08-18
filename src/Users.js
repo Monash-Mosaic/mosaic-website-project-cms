@@ -34,30 +34,26 @@ function getCurrentUser_() {
   };
 }
 
-function requireEditor_() {
+function requireCreator_() {
   const user = getCurrentUser_();
 
   const allowed = [
-    'EDITOR',
-    'APPROVER',
-    'ADMIN'
+    CONFIG.ROLES.CREATOR,
+    CONFIG.ROLES.ADMIN
   ];
 
   if (!allowed.includes(user.role)) {
-    throw new Error('Editor permission required.');
+    throw new Error('Creator permission required.');
   }
 
   return user;
 }
 
-function requireApprover_() {
+function requireAdmin_() {
   const user = getCurrentUser_();
 
-  if (
-    user.role !== 'APPROVER' &&
-    user.role !== 'ADMIN'
-  ) {
-    throw new Error('Approver permission required.');
+  if (user.role !== CONFIG.ROLES.ADMIN) {
+    throw new Error('Admin permission required.');
   }
 
   return user;

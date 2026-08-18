@@ -1,7 +1,7 @@
 {
   "user": {
-    "email": "editor@monash.edu",
-    "role": "EDITOR"
+    "email": "admin@monash.edu",
+    "role": "ADMIN"
   },
   "projects": [
     {
@@ -18,8 +18,8 @@
       "currentVersion": 2,
       "isLive": true,
       "createdAt": "2026-03-12T09:00:00.000Z",
-      "submittedBy": "editor@monash.edu",
-      "approvedBy": "approver@monash.edu",
+      "submittedBy": "creator@monash.edu",
+      "approvedBy": "admin@monash.edu",
       "rejectionReason": ""
     },
     {
@@ -36,7 +36,7 @@
       "currentVersion": null,
       "isLive": false,
       "createdAt": "2026-08-01T11:20:00.000Z",
-      "submittedBy": "editor@monash.edu",
+      "submittedBy": "creator@monash.edu",
       "approvedBy": "",
       "rejectionReason": ""
     },
@@ -72,7 +72,7 @@
       "currentVersion": 1,
       "isLive": true,
       "createdAt": "2026-05-04T08:15:00.000Z",
-      "submittedBy": "editor@monash.edu",
+      "submittedBy": "creator@monash.edu",
       "approvedBy": "",
       "rejectionReason": "Hero image is too dark and the description is too long for the website card."
     },
@@ -90,7 +90,7 @@
       "currentVersion": 2,
       "isLive": true,
       "createdAt": "2025-11-20T10:00:00.000Z",
-      "submittedBy": "editor@monash.edu",
+      "submittedBy": "creator@monash.edu",
       "approvedBy": "",
       "rejectionReason": ""
     }

@@ -10,7 +10,7 @@
     content="width=device-width, initial-scale=1"
   >
 
-  <title>Project CMS</title>
+  <title>MOSAIC Website Project CMS</title>
 
 
 <style>
@@ -35,9 +35,11 @@
   --muted: #a1a1aa;
   --muted-soft: #71717a;
 
-  --primary: #7c3aed;
-  --primary-hover: #8b5cf6;
-  --primary-soft: rgba(124,58,237,.14);
+  --primary: #14b8a6;
+  --primary-hover: #0f9f93;
+  --primary-soft: rgba(20,184,166,.14);
+  --secondary: #3b82f6;
+  --secondary-soft: rgba(59,130,246,.14);
 
   --danger: #ef4444;
   --danger-bg: rgba(239,68,68,.10);
@@ -108,31 +110,338 @@ textarea {
 
 
 /* --------------------------------
-   HEADER
+   SITE HEADER
 -------------------------------- */
 
 
-.header {
+.site-header {
 
-  display: flex;
+  position:
+    sticky;
 
-  flex-direction:
-    column;
+  top:
+    0;
 
-  gap: 24px;
+  z-index:
+    80;
 
-  margin-bottom: 38px;
+  border-bottom:
+    1px solid var(--border);
+
+  background:
+    rgba(9,9,11,.92);
+
+  backdrop-filter:
+    blur(16px);
 
 }
 
 
-.hero {
+.site-header-inner {
 
-  position: relative;
+  max-width:
+    1450px;
 
-  overflow: hidden;
+  margin:
+    auto;
 
-  display: flex;
+  padding:
+    0 32px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    24px;
+
+  min-height:
+    64px;
+
+}
+
+
+.brand {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    12px;
+
+  flex-shrink:
+    0;
+
+}
+
+
+.brand-mark {
+
+  width:
+    38px;
+
+  height:
+    38px;
+
+  border-radius:
+    10px;
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary) 0%,
+      var(--secondary) 100%
+    );
+
+  font-weight:
+    800;
+
+  font-size:
+    16px;
+
+  color:
+    white;
+
+}
+
+
+.brand-title {
+
+  font-size:
+    16px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    -.3px;
+
+}
+
+
+.brand-subtitle {
+
+  font-size:
+    12px;
+
+  color:
+    var(--muted);
+
+  margin-top:
+    2px;
+
+}
+
+
+.main-nav {
+
+  display:
+    flex;
+
+  gap:
+    4px;
+
+  padding:
+    4px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    12px;
+
+  background:
+    rgba(255,255,255,.03);
+
+}
+
+
+.nav-tab {
+
+  padding:
+    8px 18px;
+
+  border:
+    none;
+
+  border-radius:
+    8px;
+
+  background:
+    transparent;
+
+  color:
+    var(--muted);
+
+  font-weight:
+    600;
+
+  font-size:
+    14px;
+
+  cursor:
+    pointer;
+
+  transition:
+    background .2s,
+    color .2s;
+
+}
+
+
+.nav-tab:hover {
+
+  color:
+    var(--text);
+
+  background:
+    rgba(255,255,255,.05);
+
+}
+
+
+.nav-tab.active {
+
+  color:
+    white;
+
+  background:
+    var(--primary-soft);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(20,184,166,.25);
+
+}
+
+
+.header-user {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  flex-shrink:
+    0;
+
+}
+
+
+.user-email {
+
+  font-size:
+    13px;
+
+  color:
+    var(--muted);
+
+}
+
+
+.role-badge {
+
+  padding:
+    4px 10px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    .06em;
+
+  text-transform:
+    uppercase;
+
+  background:
+    var(--primary-soft);
+
+  color:
+    #99f6e4;
+
+  border:
+    1px solid rgba(20,184,166,.25);
+
+}
+
+
+.role-badge-viewer {
+
+  background:
+    rgba(161,161,170,.12);
+
+  color:
+    #d4d4d8;
+
+  border-color:
+    rgba(161,161,170,.2);
+
+}
+
+
+.role-badge-creator {
+
+  background:
+    rgba(59,130,246,.12);
+
+  color:
+    #93c5fd;
+
+  border-color:
+    rgba(59,130,246,.25);
+
+}
+
+
+
+/* --------------------------------
+   SECTIONS
+-------------------------------- */
+
+
+.section-panel {
+
+  display:
+    none;
+
+}
+
+
+.section-panel.active {
+
+  display:
+    block;
+
+}
+
+
+.section-header {
+
+  display:
+    flex;
 
   justify-content:
     space-between;
@@ -140,292 +449,79 @@ textarea {
   align-items:
     flex-end;
 
-  gap: 24px;
-
-  padding:
-    28px;
-
-  border:
-    1px solid
-    var(--border-strong);
-
-  border-radius:
-    24px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(124,58,237,.22) 0%,
-      rgba(59,130,246,.10) 38%,
-      rgba(10,10,12,.92) 100%
-    );
-
-  box-shadow:
-    0 30px 70px rgba(0,0,0,.32);
-
-}
-
-
-.hero::before {
-
-  content: '';
-
-  position:
-    absolute;
-
-  inset:
-    auto -80px -80px auto;
-
-  width:
-    240px;
-
-  height:
-    240px;
-
-  border-radius:
-    999px;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(139,92,246,.32) 0%,
-      rgba(139,92,246,0) 72%
-    );
-
-  pointer-events:
-    none;
-
-}
-
-
-.hero-copy,
-.hero-actions {
-  position: relative;
-  z-index: 1;
-}
-
-
-.hero-copy {
-  max-width: 780px;
-}
-
-
-.eyebrow {
-
-  display: inline-flex;
-
-  align-items:
-    center;
-
-  gap: 8px;
-
-  padding:
-    7px 12px;
+  gap:
+    16px;
 
   margin-bottom:
-    16px;
+    24px;
+
+}
+
+
+.section-header h2 {
+
+  margin:
+    0;
+
+  font-size:
+    24px;
+
+  letter-spacing:
+    -.4px;
+
+}
+
+
+.section-header p {
+
+  margin:
+    6px 0 0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    14px;
+
+}
+
+
+
+/* --------------------------------
+   FILTER TABS
+-------------------------------- */
+
+
+.filter-tabs {
+
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    8px;
+
+  margin-bottom:
+    24px;
+
+}
+
+
+.filter-tab {
+
+  padding:
+    9px 16px;
 
   border:
-    1px solid rgba(255,255,255,.10);
+    1px solid var(--border);
 
   border-radius:
     999px;
 
   background:
-    rgba(9,9,11,.42);
-
-  color:
-    #ddd6fe;
-
-  font-size:
-    12px;
-
-  font-weight:
-    700;
-
-  letter-spacing:
-    .08em;
-
-  text-transform:
-    uppercase;
-
-}
-
-
-.header-title h1 {
-
-  margin: 0;
-
-  font-size: 36px;
-
-  letter-spacing: -1.2px;
-
-  line-height:
-    1.05;
-
-}
-
-
-.header-title p {
-
-  margin:
-    8px 0 0;
-
-  color:
-    var(--muted);
-
-  font-size:
-    15px;
-
-  line-height:
-    1.65;
-
-  max-width:
-    62ch;
-
-}
-
-
-.hero-metrics {
-
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 12px;
-
-  margin-top:
-    18px;
-
-}
-
-
-.hero-metric {
-
-  min-width: 130px;
-
-  padding:
-    14px 16px;
-
-  border:
-    1px solid rgba(255,255,255,.08);
-
-  border-radius:
-    16px;
-
-  background:
-    rgba(255,255,255,.04);
-
-  backdrop-filter:
-    blur(12px);
-
-}
-
-
-.hero-metric-label {
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
-
-  text-transform:
-    uppercase;
-
-  letter-spacing:
-    .08em;
-
-}
-
-
-.hero-metric-value {
-
-  margin-top:
-    8px;
-
-  font-size:
-    24px;
-
-  font-weight:
-    700;
-
-}
-
-
-.hero-actions {
-
-  display: flex;
-
-  flex-direction:
-    column;
-
-  align-items:
-    stretch;
-
-  gap: 14px;
-
-  min-width:
-    270px;
-
-}
-
-
-.hero-panel {
-
-  padding:
-    18px;
-
-  border:
-    1px solid rgba(255,255,255,.08);
-
-  border-radius:
-    18px;
-
-  background:
-    rgba(7,7,10,.44);
-
-  backdrop-filter:
-    blur(12px);
-
-}
-
-
-.hero-panel-label {
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
-
-  text-transform:
-    uppercase;
-
-  letter-spacing:
-    .08em;
-
-}
-
-
-.hero-panel-value {
-
-  margin-top:
-    8px;
-
-  font-size:
-    20px;
-
-  font-weight:
-    700;
-
-}
-
-
-.hero-panel-text {
-
-  margin-top:
-    6px;
+    rgba(17,17,19,.72);
 
   color:
     var(--muted);
@@ -433,10 +529,438 @@ textarea {
   font-size:
     13px;
 
-  line-height:
-    1.55;
+  font-weight:
+    600;
+
+  cursor:
+    pointer;
+
+  transition:
+    border-color .2s,
+    color .2s,
+    background .2s;
 
 }
+
+
+.filter-tab:hover {
+
+  color:
+    var(--text);
+
+  border-color:
+    #3f3f46;
+
+}
+
+
+.filter-tab.active {
+
+  color:
+    #99f6e4;
+
+  border-color:
+    rgba(20,184,166,.45);
+
+  background:
+    var(--primary-soft);
+
+}
+
+
+.filter-count {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-width:
+    20px;
+
+  height:
+    20px;
+
+  margin-left:
+    6px;
+
+  padding:
+    0 6px;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255,255,255,.08);
+
+  font-size:
+    11px;
+
+}
+
+
+
+/* --------------------------------
+   USERS TABLE
+-------------------------------- */
+
+
+.users-table-wrap {
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    18px;
+
+  overflow:
+    hidden;
+
+  background:
+    rgba(17,17,19,.72);
+
+}
+
+
+.users-table {
+
+  width:
+    100%;
+
+  border-collapse:
+    collapse;
+
+}
+
+
+.users-table th,
+.users-table td {
+
+  padding:
+    14px 18px;
+
+  text-align:
+    left;
+
+  border-bottom:
+    1px solid var(--border);
+
+}
+
+
+.users-table th {
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    .06em;
+
+  color:
+    var(--muted);
+
+  background:
+    rgba(255,255,255,.02);
+
+}
+
+
+.users-table tr:last-child td {
+
+  border-bottom:
+    none;
+
+}
+
+
+.users-table td {
+
+  font-size:
+    14px;
+
+}
+
+
+.role-pill {
+
+  display:
+    inline-flex;
+
+  padding:
+    4px 10px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    .05em;
+
+}
+
+
+.role-pill-admin {
+
+  background:
+    rgba(20,184,166,.14);
+
+  color:
+    #99f6e4;
+
+}
+
+
+.role-pill-creator {
+
+  background:
+    rgba(59,130,246,.14);
+
+  color:
+    #93c5fd;
+
+}
+
+
+.role-pill-viewer {
+
+  background:
+    rgba(161,161,170,.14);
+
+  color:
+    #d4d4d8;
+
+}
+
+
+.status-pill {
+
+  display:
+    inline-flex;
+
+  padding:
+    4px 10px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+}
+
+
+.status-pill-active {
+
+  background:
+    rgba(34,197,94,.14);
+
+  color:
+    #86efac;
+
+}
+
+
+.status-pill-inactive {
+
+  background:
+    rgba(239,68,68,.12);
+
+  color:
+    #fca5a5;
+
+}
+
+
+.table-actions {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+
+}
+
+
+.table-action-btn {
+
+  padding:
+    7px 12px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  border-radius:
+    10px;
+
+  background:
+    rgba(255,255,255,.03);
+
+  color:
+    #e4e4e7;
+
+  font-size:
+    12px;
+
+  font-weight:
+    600;
+
+  cursor:
+    pointer;
+
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    opacity .2s ease;
+
+}
+
+
+.table-action-btn:hover {
+
+  background:
+    rgba(255,255,255,.08);
+
+  border-color:
+    rgba(255,255,255,.14);
+
+}
+
+
+.table-action-btn:disabled {
+
+  opacity:
+    .45;
+
+  cursor:
+    not-allowed;
+
+}
+
+
+.table-action-btn-primary {
+
+  color:
+    #99f6e4;
+
+  border-color:
+    rgba(20,184,166,.24);
+
+  background:
+    rgba(20,184,166,.08);
+
+}
+
+
+.table-action-btn-primary:hover {
+
+  background:
+    rgba(20,184,166,.14);
+
+  border-color:
+    rgba(20,184,166,.34);
+
+}
+
+
+.table-action-btn-danger {
+
+  color:
+    #fca5a5;
+
+  border-color:
+    rgba(239,68,68,.2);
+
+  background:
+    rgba(239,68,68,.06);
+
+}
+
+
+.table-action-btn-danger:hover {
+
+  background:
+    rgba(239,68,68,.12);
+
+  border-color:
+    rgba(239,68,68,.3);
+
+}
+
+
+.user-form-actions {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    10px;
+
+}
+
+
+.checkbox-label {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  cursor:
+    pointer;
+
+  font-size:
+    14px;
+
+}
+
+
+.checkbox-label input {
+
+  width:
+    16px;
+
+  height:
+    16px;
+
+  accent-color:
+    var(--primary);
+
+}
+
+
+/* --------------------------------
+   HEADER (legacy hero - removed)
+-------------------------------- */
 
 
 .new-button {
@@ -450,7 +974,7 @@ textarea {
     linear-gradient(
       135deg,
       var(--primary) 0%,
-      #6d28d9 100%
+      var(--secondary) 100%
     );
 
   border-radius:
@@ -471,7 +995,7 @@ textarea {
     background .2s ease;
 
   box-shadow:
-    0 16px 30px rgba(124,58,237,.28);
+    0 16px 30px rgba(20,184,166,.18);
 
 }
 
@@ -482,14 +1006,14 @@ textarea {
     linear-gradient(
       135deg,
       var(--primary-hover) 0%,
-      #7c3aed 100%
+      #2563eb 100%
     );
 
   transform:
     translateY(-2px);
 
   box-shadow:
-    0 20px 34px rgba(124,58,237,.34);
+    0 20px 34px rgba(20,184,166,.24);
 
 }
 
@@ -567,7 +1091,7 @@ textarea {
   background:
     linear-gradient(
       90deg,
-      rgba(124,58,237,.92) 0%,
+      rgba(20,184,166,.92) 0%,
       rgba(59,130,246,.92) 100%
     );
 
@@ -640,24 +1164,10 @@ textarea {
 }
 
 
-.toolbar-copy h2 {
-
-  margin:
-    0;
-
-  font-size:
-    20px;
-
-  letter-spacing:
-    -.4px;
-
-}
-
-
 .toolbar-copy p {
 
   margin:
-    6px 0 0;
+    0;
 
   color:
     var(--muted);
@@ -749,10 +1259,10 @@ textarea {
 .search:focus {
 
   border-color:
-    rgba(139,92,246,.75);
+    rgba(20,184,166,.75);
 
   box-shadow:
-    0 0 0 4px rgba(124,58,237,.14);
+    0 0 0 4px rgba(20,184,166,.14);
 
 }
 
@@ -809,7 +1319,7 @@ textarea {
     );
 
   box-shadow:
-    0 0 0 6px rgba(124,58,237,.12);
+    0 0 0 6px rgba(20,184,166,.12);
 
 }
 
@@ -1164,16 +1674,27 @@ textarea {
 .card-actions {
 
   display:
-    grid;
+    flex;
 
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
+  flex-wrap:
+    wrap;
 
   gap:
     10px;
 
   margin-top:
     20px;
+
+}
+
+
+.card-actions .action-button {
+
+  flex:
+    1 1 calc(33.333% - 7px);
+
+  min-width:
+    90px;
 
 }
 
@@ -1251,6 +1772,225 @@ textarea {
 
   color:
     #c4b5fd;
+
+}
+
+
+.approve-button {
+
+  color:
+    #86efac;
+
+}
+
+
+.secondary-button {
+
+  background:
+    rgba(255,255,255,.04);
+
+  box-shadow:
+    none;
+
+}
+
+
+.secondary-button:hover {
+
+  background:
+    rgba(255,255,255,.08);
+
+  box-shadow:
+    none;
+
+}
+
+
+.rejection-note {
+
+  margin-top:
+    14px;
+
+  padding:
+    12px 14px;
+
+  border:
+    1px solid rgba(239,68,68,.24);
+
+  border-radius:
+    12px;
+
+  background:
+    rgba(239,68,68,.08);
+
+  color:
+    #fecaca;
+
+  font-size:
+    13px;
+
+  line-height:
+    1.5;
+
+}
+
+
+.modal-overlay {
+
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    20px;
+
+  background:
+    rgba(0,0,0,.72);
+
+  backdrop-filter:
+    blur(4px);
+
+  opacity:
+    0;
+
+  pointer-events:
+    none;
+
+  transition:
+    opacity .25s ease;
+
+  z-index:
+    110;
+
+}
+
+
+.modal-overlay.active {
+
+  opacity:
+    1;
+
+  pointer-events:
+    auto;
+
+}
+
+
+.modal {
+
+  width:
+    min(420px, 100%);
+
+  padding:
+    24px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    18px;
+
+  background:
+    #121218;
+
+  box-shadow:
+    0 24px 60px rgba(0,0,0,.42);
+
+}
+
+
+.modal h3 {
+
+  margin:
+    0 0 8px;
+
+  font-size:
+    20px;
+
+}
+
+
+.modal p {
+
+  margin:
+    0 0 16px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    14px;
+
+  line-height:
+    1.55;
+
+}
+
+
+.modal-actions {
+
+  display:
+    flex;
+
+  justify-content:
+    flex-end;
+
+  gap:
+    10px;
+
+  margin-top:
+    18px;
+
+}
+
+
+.modal-button {
+
+  padding:
+    10px 14px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    10px;
+
+  background:
+    #18181b;
+
+  color:
+    white;
+
+  cursor:
+    pointer;
+
+  font-weight:
+    600;
+
+}
+
+
+.modal-button-danger {
+
+  border-color:
+    rgba(239,68,68,.35);
+
+  background:
+    rgba(239,68,68,.14);
+
+  color:
+    #fca5a5;
 
 }
 
@@ -1585,7 +2325,7 @@ textarea.form-control {
     linear-gradient(
       135deg,
       var(--primary) 0%,
-      #6d28d9 100%
+      var(--secondary) 100%
     );
 
   color:
@@ -1606,7 +2346,7 @@ textarea.form-control {
     linear-gradient(
       135deg,
       var(--primary-hover) 0%,
-      #7c3aed 100%
+      #2563eb 100%
     );
 
 }
@@ -1750,13 +2490,13 @@ textarea.form-control {
     18px;
 
   background:
-    rgba(124,58,237,.12);
+    rgba(20,184,166,.12);
 
   border:
-    1px solid rgba(124,58,237,.20);
+    1px solid rgba(20,184,166,.20);
 
   color:
-    #ddd6fe;
+    #99f6e4;
 
   font-size:
     28px;
@@ -1848,12 +2588,40 @@ textarea.form-control {
       25px 18px 60px;
   }
 
-  .hero {
+  .site-header-inner {
     padding:
-      22px;
+      0 18px;
+    flex-wrap:
+      wrap;
+    min-height:
+      auto;
+    padding-top:
+      12px;
+    padding-bottom:
+      12px;
   }
 
-  .hero,
+  .main-nav {
+    order:
+      3;
+    width:
+      100%;
+    justify-content:
+      center;
+  }
+
+  .header-user {
+    margin-left:
+      auto;
+  }
+
+  .section-header {
+    flex-direction:
+      column;
+    align-items:
+      stretch;
+  }
+
   .toolbar {
     flex-direction:
       column;
@@ -1868,7 +2636,6 @@ textarea.form-control {
 
   }
 
-  .hero-actions,
   .search-wrap {
     width:
       100%;
@@ -1876,9 +2643,9 @@ textarea.form-control {
       0;
   }
 
-  .card-actions {
-    grid-template-columns:
-      1fr;
+  .card-actions .action-button {
+    flex:
+      1 1 100%;
   }
 
   .results-pill {
@@ -1886,6 +2653,11 @@ textarea.form-control {
       100%;
     justify-content:
       center;
+  }
+
+  .users-table-wrap {
+    overflow-x:
+      auto;
   }
 
 }
@@ -1899,101 +2671,149 @@ textarea.form-control {
 <body>
 
 
+<header class="site-header">
+
+  <div class="site-header-inner">
+
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-title">MOSAIC Website CMS</div>
+        <div class="brand-subtitle">Content management dashboard</div>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <button
+        class="nav-tab active"
+        data-section="projects"
+        onclick="switchSection('projects')"
+      >
+        CMS
+      </button>
+      <button
+        id="usersNavTab"
+        class="nav-tab"
+        data-section="users"
+        onclick="switchSection('users')"
+        style="display:none"
+      >
+        Users
+      </button>
+    </nav>
+
+    <div class="header-user">
+      <span
+        class="user-email"
+        id="currentUserEmail"
+      >
+        —
+      </span>
+      <span
+        class="role-badge"
+        id="currentUserRoleBadge"
+      >
+        —
+      </span>
+    </div>
+
+  </div>
+
+</header>
+
+
 <div class="app">
 
 
-  <header class="header">
+  <section
+    id="projectsSection"
+    class="section-panel active"
+  >
 
-    <div class="hero">
-
-      <div class="hero-copy">
-
-        <div class="eyebrow">
-          Website Content Manager
-        </div>
-
-        <div class="header-title">
-
-          <h1>Projects Dashboard</h1>
-
-          <p>
-            Review, update, and publish website projects from one place.
-            Track draft work, approval status, and live entries with a cleaner workflow.
-          </p>
-
-        </div>
-
-        <div class="hero-metrics">
-
-          <div class="hero-metric">
-            <div class="hero-metric-label">
-              Total Portfolio
-            </div>
-            <div
-              class="hero-metric-value"
-              id="heroProjectCount"
-            >
-              —
-            </div>
-          </div>
-
-          <div class="hero-metric">
-            <div class="hero-metric-label">
-              Ready To Review
-            </div>
-            <div
-              class="hero-metric-value"
-              id="heroPendingCount"
-            >
-              —
-            </div>
-          </div>
-
-        </div>
-
+    <div class="section-header">
+      <div>
+        <h2>Content</h2>
+        <p>
+          Manage website content, drafts, approvals, and archives.
+        </p>
       </div>
-
-
-      <div class="hero-actions">
-
-        <div class="hero-panel">
-          <div class="hero-panel-label">
-            Workspace Summary
-          </div>
-          <div
-            class="hero-panel-value"
-            id="heroStatusLabel"
-          >
-            Loading...
-          </div>
-          <div
-            class="hero-panel-text"
-            id="heroStatusText"
-          >
-            Project metrics will appear once the dashboard loads.
-          </div>
-        </div>
-
-        <button
-          class="new-button"
-          onclick="openCreateDrawer()"
-        >
-          + New Project
-        </button>
-
-      </div>
-
+      <button
+        id="newProjectButton"
+        class="new-button"
+        onclick="openCreateDrawer()"
+        style="display:none"
+      >
+        + New Entry
+      </button>
     </div>
 
-  </header>
 
+    <div class="filter-tabs">
+
+      <button
+        class="filter-tab active"
+        data-filter="all"
+        onclick="setProjectFilter('all')"
+      >
+        All
+        <span
+          class="filter-count"
+          id="countAll"
+        >
+          0
+        </span>
+      </button>
+
+      <button
+        class="filter-tab"
+        data-filter="pending"
+        onclick="setProjectFilter('pending')"
+      >
+        Pending Approval
+        <span
+          class="filter-count"
+          id="countPending"
+        >
+          0
+        </span>
+      </button>
+
+      <button
+        class="filter-tab"
+        data-filter="approved"
+        onclick="setProjectFilter('approved')"
+      >
+        Approved
+        <span
+          class="filter-count"
+          id="countApproved"
+        >
+          0
+        </span>
+      </button>
+
+      <button
+        class="filter-tab"
+        data-filter="archived"
+        onclick="setProjectFilter('archived')"
+      >
+        Archived
+        <span
+          class="filter-count"
+          id="countArchived"
+        >
+          0
+        </span>
+      </button>
+
+    </div>
 
 
   <section class="stats">
 
     <div class="stat">
       <div class="stat-label">
-        Total Projects
+        Total Entries
       </div>
 
       <div
@@ -2003,7 +2823,7 @@ textarea.form-control {
         —
       </div>
       <div class="stat-subtext">
-        All visible projects in the CMS.
+        All active entries in the CMS.
       </div>
     </div>
 
@@ -2065,9 +2885,8 @@ textarea.form-control {
   <section class="toolbar">
 
     <div class="toolbar-copy">
-      <h2>Project Library</h2>
       <p>
-        Search by project name or description and jump back into editing quickly.
+        Search by entry name or description.
       </p>
     </div>
 
@@ -2080,7 +2899,7 @@ textarea.form-control {
           type="search"
           id="search"
           class="search"
-          placeholder="Search projects..."
+          placeholder="Search entries..."
           oninput="renderProjects()"
         >
       </div>
@@ -2111,6 +2930,44 @@ textarea.form-control {
 
   </div>
 
+  </section>
+
+
+  <section
+    id="usersSection"
+    class="section-panel"
+  >
+
+    <div class="section-header">
+      <div>
+        <h2>Users</h2>
+        <p>
+          Manage CMS access and roles for your team.
+        </p>
+      </div>
+      <button
+        id="addUserButton"
+        class="new-button"
+        onclick="openUserDrawer()"
+        style="display:none"
+      >
+        + Add User
+      </button>
+    </div>
+
+    <div
+      id="usersContainer"
+      class="users-table-wrap"
+    >
+
+      <div class="loading">
+        Loading users...
+      </div>
+
+    </div>
+
+  </section>
+
 </div>
 
 
@@ -2136,7 +2993,7 @@ textarea.form-control {
 
     <div>
       <h2 id="drawerTitle">
-        New Project
+        New Entry
       </h2>
       <div class="drawer-note">
         Save your work as a draft before sending it for approval.
@@ -2176,7 +3033,7 @@ textarea.form-control {
       <div class="form-group">
 
         <label>
-          Project Name
+          Entry Name
         </label>
 
         <input
@@ -2211,7 +3068,7 @@ textarea.form-control {
       <div class="form-group">
 
         <label>
-          Project Image
+          Entry Image
         </label>
 
         <input
@@ -2247,7 +3104,7 @@ textarea.form-control {
       <div class="form-group">
 
         <label>
-          Project Link
+          Entry Link
         </label>
 
         <input
@@ -2282,6 +3139,181 @@ textarea.form-control {
 
 
 
+<aside
+  id="userDrawer"
+  class="drawer"
+>
+
+  <div class="drawer-header">
+
+    <div>
+      <h2 id="userDrawerTitle">Add CMS User</h2>
+      <div class="drawer-note" id="userDrawerNote">
+        Grant access to the CMS with an ADMIN, CREATOR, or VIEWER role.
+      </div>
+    </div>
+
+    <button
+      class="close-button"
+      onclick="closeUserDrawer()"
+    >
+      ✕
+    </button>
+
+  </div>
+
+
+  <div class="drawer-content">
+
+    <form
+      id="userForm"
+      onsubmit="
+        submitUser(this);
+        return false;
+      "
+    >
+
+      <input
+        type="hidden"
+        id="userOriginalEmail"
+      >
+
+      <div class="form-group">
+
+        <label>
+          Email
+        </label>
+
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          id="userFormEmail"
+          placeholder="name@monash.edu"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Role
+        </label>
+
+        <select
+          class="form-control"
+          name="role"
+          id="userFormRole"
+          required
+        >
+          <option value="CREATOR">CREATOR</option>
+          <option value="VIEWER">VIEWER</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+
+        <div class="help-text">
+          CREATOR can edit and submit. VIEWER is read-only. ADMIN can approve, delete, and manage users.
+        </div>
+
+      </div>
+
+
+      <div
+        class="form-group"
+        id="userActiveGroup"
+        style="display:none"
+      >
+
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            id="userFormActive"
+            checked
+          >
+          Active user
+        </label>
+
+        <div class="help-text">
+          Inactive users cannot access the CMS.
+        </div>
+
+      </div>
+
+
+      <div class="user-form-actions">
+        <button
+          type="submit"
+          class="form-button"
+          id="saveUserButton"
+        >
+          Add User
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</aside>
+
+
+
+<div
+  id="rejectModal"
+  class="modal-overlay"
+>
+
+  <div class="modal">
+
+    <h3>
+      Reject submission
+    </h3>
+
+    <p>
+      Provide a one-line reason so the creator knows what to fix.
+    </p>
+
+    <input
+      type="hidden"
+      id="rejectVersionId"
+    >
+
+    <input
+      type="text"
+      class="form-control"
+      id="rejectReason"
+      maxlength="200"
+      placeholder="Reason for rejection"
+    >
+
+    <div class="modal-actions">
+
+      <button
+        type="button"
+        class="modal-button"
+        onclick="closeRejectModal()"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="modal-button modal-button-danger"
+        onclick="confirmReject()"
+      >
+        Reject
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
 <div
   class="toast"
   id="toast"
@@ -2298,7 +3330,7 @@ if (
 ) {
 
   document.write(
-    '<script src="/dummy/local-dev.js"><\/script>'
+    '<script src="./dummy/local-dev.js"><\/script>'
   );
 
 }
@@ -2335,6 +3367,10 @@ body.local-dev {
   padding-top: 36px;
 }
 
+body.local-dev .site-header {
+  top: 36px;
+}
+
 </style>
 
 
@@ -2344,7 +3380,41 @@ body.local-dev {
 
 let projects = [];
 
+let users = [];
+
+let currentUser = null;
+
 let editMode = false;
+
+let userEditMode = false;
+
+let currentSection = 'projects';
+
+let projectFilter = 'all';
+
+
+
+/* -------------------------
+   ROLES
+------------------------- */
+
+
+function isAdmin() {
+  return currentUser?.role === 'ADMIN';
+}
+
+
+function isCreator() {
+  return (
+    currentUser?.role === 'CREATOR' ||
+    currentUser?.role === 'ADMIN'
+  );
+}
+
+
+function isViewer() {
+  return currentUser?.role === 'VIEWER';
+}
 
 
 
@@ -2376,7 +3446,7 @@ function showLocalDevBanner() {
 
   banner.className = 'local-dev-banner';
   banner.textContent =
-    'Local dev mode — using dummy data from /dummy/data/dashboard.json';
+    'Local dev mode — using dummy table data from dummy/data/*.json';
 
   document.body.prepend(banner);
 
@@ -2394,7 +3464,16 @@ function loadProjects() {
         projects =
           data.projects || [];
 
+        currentUser =
+          data.user || null;
+
+        updateUserInfo();
+
+        updateHeaderActions();
+
         updateStats();
+
+        updateFilterCounts();
 
         renderProjects();
 
@@ -2420,6 +3499,192 @@ function loadProjects() {
 
 
 
+function updateUserInfo() {
+
+  const emailEl =
+    document.getElementById('currentUserEmail');
+
+  const roleEl =
+    document.getElementById('currentUserRoleBadge');
+
+  if (!currentUser) {
+    return;
+  }
+
+  emailEl.textContent =
+    currentUser.email;
+
+  roleEl.textContent =
+    currentUser.role;
+
+  roleEl.className =
+    'role-badge role-badge-' +
+    currentUser.role.toLowerCase();
+
+}
+
+
+
+function updateHeaderActions() {
+
+  const newProjectButton =
+    document.getElementById(
+      'newProjectButton'
+    );
+
+  const addUserButton =
+    document.getElementById(
+      'addUserButton'
+    );
+
+  const usersNavTab =
+    document.getElementById(
+      'usersNavTab'
+    );
+
+  if (newProjectButton) {
+    newProjectButton.style.display =
+      isCreator()
+        ? 'block'
+        : 'none';
+  }
+
+  if (addUserButton) {
+    addUserButton.style.display =
+      isAdmin()
+        ? 'block'
+        : 'none';
+  }
+
+  if (usersNavTab) {
+    usersNavTab.style.display =
+      isAdmin()
+        ? 'block'
+        : 'none';
+  }
+
+}
+
+
+
+function switchSection(section) {
+
+  currentSection = section;
+
+  document
+    .querySelectorAll('.nav-tab')
+    .forEach(tab => {
+      tab.classList.toggle(
+        'active',
+        tab.dataset.section === section
+      );
+    });
+
+  document
+    .getElementById('projectsSection')
+    .classList
+    .toggle(
+      'active',
+      section === 'projects'
+    );
+
+  document
+    .getElementById('usersSection')
+    .classList
+    .toggle(
+      'active',
+      section === 'users'
+    );
+
+  if (section === 'users') {
+    loadUsers();
+  }
+
+}
+
+
+
+function setProjectFilter(filter) {
+
+  projectFilter = filter;
+
+  document
+    .querySelectorAll('.filter-tab')
+    .forEach(tab => {
+      tab.classList.toggle(
+        'active',
+        tab.dataset.filter === filter
+      );
+    });
+
+  renderProjects();
+
+}
+
+
+
+function matchesProjectFilter(project) {
+
+  if (projectFilter === 'archived') {
+    return project.archived;
+  }
+
+  if (project.archived) {
+    return false;
+  }
+
+  if (projectFilter === 'all') {
+    return true;
+  }
+
+  if (projectFilter === 'pending') {
+    return project.status === 'PENDING_APPROVAL';
+  }
+
+  if (projectFilter === 'approved') {
+    return project.status === 'APPROVED';
+  }
+
+  return true;
+
+}
+
+
+
+function updateFilterCounts() {
+
+  const active =
+    projects.filter(p => !p.archived);
+
+  const counts = {
+    all: active.length,
+    pending: active.filter(
+      p => p.status === 'PENDING_APPROVAL'
+    ).length,
+    approved: active.filter(
+      p => p.status === 'APPROVED'
+    ).length,
+    archived: projects.filter(
+      p => p.archived
+    ).length
+  };
+
+  document.getElementById('countAll').textContent =
+    counts.all;
+
+  document.getElementById('countPending').textContent =
+    counts.pending;
+
+  document.getElementById('countApproved').textContent =
+    counts.approved;
+
+  document.getElementById('countArchived').textContent =
+    counts.archived;
+
+}
+
+
+
 /* -------------------------
    STATS
 ------------------------- */
@@ -2427,23 +3692,26 @@ function loadProjects() {
 
 function updateStats() {
 
+  const active =
+    projects.filter(p => !p.archived);
+
   const total =
-    projects.length;
+    active.length;
 
   const live =
-    projects.filter(
+    active.filter(
       p => p.isLive
     ).length;
 
   const draft =
-    projects.filter(
+    active.filter(
       p =>
         p.status === 'DRAFT' ||
         p.status === 'REJECTED'
     ).length;
 
   const pending =
-    projects.filter(
+    active.filter(
       p =>
         p.status ===
         'PENDING_APPROVAL'
@@ -2471,54 +3739,6 @@ function updateStats() {
     'pendingCount'
   ).innerText =
     pending;
-
-
-  document.getElementById(
-    'heroProjectCount'
-  ).innerText =
-    total;
-
-  document.getElementById(
-    'heroPendingCount'
-  ).innerText =
-    pending;
-
-
-  const heroStatusLabel =
-    document.getElementById(
-      'heroStatusLabel'
-    );
-
-  const heroStatusText =
-    document.getElementById(
-      'heroStatusText'
-    );
-
-  if (pending > 0) {
-
-    heroStatusLabel.innerText =
-      `${pending} item${pending === 1 ? '' : 's'} waiting`;
-
-    heroStatusText.innerText =
-      'Pending submissions are ready for approver review.';
-
-  } else if (draft > 0) {
-
-    heroStatusLabel.innerText =
-      `${draft} draft${draft === 1 ? '' : 's'} in progress`;
-
-    heroStatusText.innerText =
-      'Everything is clear for approval, but draft work is still open.';
-
-  } else {
-
-    heroStatusLabel.innerText =
-      'All caught up';
-
-    heroStatusText.innerText =
-      'No pending approvals or draft changes need attention right now.';
-
-  }
 
 }
 
@@ -2549,6 +3769,10 @@ function renderProjects() {
     projects.filter(
       project => {
 
+        if (!matchesProjectFilter(project)) {
+          return false;
+        }
+
         return (
 
           project.name
@@ -2567,12 +3791,21 @@ function renderProjects() {
     );
 
 
+  const filterLabel =
+    projectFilter === 'all'
+      ? 'all active'
+      : projectFilter === 'pending'
+        ? 'pending'
+        : projectFilter === 'approved'
+          ? 'approved'
+          : 'archived';
+
   document.getElementById(
     'resultsLabel'
   ).innerText =
     query
       ? `${filtered.length} result${filtered.length === 1 ? '' : 's'} for "${query}"`
-      : `${projects.length} project${projects.length === 1 ? '' : 's'} in view`;
+      : `${filtered.length} ${filterLabel} entr${filtered.length === 1 ? 'y' : 'ies'}`;
 
 
   if (!filtered.length) {
@@ -2582,10 +3815,14 @@ function renderProjects() {
       <div class="empty">
         <div class="empty-icon">⌕</div>
         <div class="empty-title">
-          No projects found
+          No entries found
         </div>
         <div class="empty-text">
-          Try a different keyword, or create a new project to start building out the portfolio.
+          ${
+            projectFilter === 'archived'
+              ? 'No archived entries yet.'
+              : 'Try a different keyword, or create a new entry to start publishing website content.'
+          }
         </div>
 
       </div>
@@ -2651,6 +3888,99 @@ function createProjectCard(project) {
       : project.changeType === 'UPDATE'
         ? 'Update draft'
         : 'New project';
+
+  const showUpdate =
+    isCreator() && !project.archived;
+
+  const showSubmit =
+    isCreator() && canSubmit && !project.archived;
+
+  const showApproveReject =
+    isAdmin() && pending;
+
+  const showArchive =
+    isCreator() && !project.archived;
+
+  const showDelete =
+    isAdmin();
+
+  const rejectionNote =
+    project.status === 'REJECTED' &&
+    project.rejectionReason
+
+      ? `
+        <div class="rejection-note">
+          <strong>Rejection reason:</strong>
+          ${escapeHtml(project.rejectionReason)}
+        </div>
+      `
+
+      : '';
+
+  const actionButtons = [];
+
+  if (showUpdate) {
+    actionButtons.push(`
+      <button
+        class="action-button"
+        onclick="openEditDrawer('${project.projectId}')"
+        ${pending ? 'disabled' : ''}
+      >
+        Update
+      </button>
+    `);
+  }
+
+  if (showSubmit) {
+    actionButtons.push(`
+      <button
+        class="action-button submit-button"
+        onclick="submitVersion('${project.latestVersionId}')"
+      >
+        Submit
+      </button>
+    `);
+  }
+
+  if (showApproveReject) {
+    actionButtons.push(`
+      <button
+        class="action-button approve-button"
+        onclick="approveVersion('${project.latestVersionId}')"
+      >
+        Approve
+      </button>
+      <button
+        class="action-button action-button-danger"
+        onclick="openRejectModal('${project.latestVersionId}')"
+      >
+        Reject
+      </button>
+    `);
+  }
+
+  if (showArchive) {
+    actionButtons.push(`
+      <button
+        class="action-button action-button-danger"
+        onclick="archiveProject('${project.projectId}', '${escapeJs(project.name)}')"
+        ${pending ? 'disabled' : ''}
+      >
+        Archive
+      </button>
+    `);
+  }
+
+  if (showDelete) {
+    actionButtons.push(`
+      <button
+        class="action-button action-button-danger"
+        onclick="deleteProject('${project.projectId}', '${escapeJs(project.name)}')"
+      >
+        Delete
+      </button>
+    `);
+  }
 
 
   return `
@@ -2732,84 +4062,19 @@ function createProjectCard(project) {
 
         </a>
 
+        ${rejectionNote}
 
+        ${
+          actionButtons.length
 
-        <div class="card-actions">
-
-
-          <button
-            class="action-button"
-
-            onclick="
-              openEditDrawer(
-                '${project.projectId}'
-              )
-            "
-
-            ${pending ? 'disabled' : ''}
-          >
-
-            Update
-
-          </button>
-
-
-
-          ${
-            canSubmit
-
-            ?
-
+            ? `
+              <div class="card-actions">
+                ${actionButtons.join('')}
+              </div>
             `
 
-            <button
-              class="
-                action-button
-                submit-button
-              "
-
-              onclick="
-                submitVersion(
-                  '${project.latestVersionId}'
-                )
-              "
-            >
-
-              Submit
-
-            </button>
-
-            `
-
-            :
-
-            ''
-          }
-
-
-
-          <button
-            class="
-              action-button
-              action-button-danger
-            "
-
-            onclick="
-              archiveProject(
-                '${project.projectId}',
-                '${escapeJs(project.name)}'
-              )
-            "
-
-            ${pending ? 'disabled' : ''}
-          >
-
-            Archive
-
-          </button>
-
-
-        </div>
+            : ''
+        }
 
 
       </div>
@@ -2871,11 +4136,142 @@ function getStatusText(status) {
 
 
 /* -------------------------
+   USERS
+------------------------- */
+
+
+function loadUsers() {
+
+  if (!isAdmin()) {
+    return;
+  }
+
+  google.script.run
+
+    .withSuccessHandler(
+      data => {
+
+        users = data || [];
+
+        renderUsers();
+
+      }
+    )
+
+    .withFailureHandler(
+      error => {
+
+        document
+          .getElementById('usersContainer')
+          .innerHTML =
+            `<div class="empty">
+              ${escapeHtml(error.message)}
+            </div>`;
+
+      }
+    )
+
+    .listUsers();
+
+}
+
+
+function renderUsers() {
+
+  const container =
+    document.getElementById(
+      'usersContainer'
+    );
+
+  if (!users.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">👤</div>
+        <div class="empty-title">
+          No users found
+        </div>
+        <div class="empty-text">
+          Add a user to grant CMS access.
+        </div>
+      </div>
+    `;
+
+    return;
+
+  }
+
+  container.innerHTML = `
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${
+          users.map(user => `
+            <tr>
+              <td>${escapeHtml(user.email)}</td>
+              <td>
+                <span class="role-pill role-pill-${user.role.toLowerCase()}">
+                  ${escapeHtml(user.role)}
+                </span>
+              </td>
+              <td>
+                <span class="status-pill ${
+                  user.active
+                    ? 'status-pill-active'
+                    : 'status-pill-inactive'
+                }">
+                  ${user.active ? 'Active' : 'Inactive'}
+                </span>
+              </td>
+              <td>
+                <div class="table-actions">
+                  <button
+                    class="table-action-btn table-action-btn-primary"
+                    onclick="openEditUserDrawer('${escapeJs(user.email)}')"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    class="table-action-btn table-action-btn-danger"
+                    onclick="deleteUserAccount('${escapeJs(user.email)}')"
+                    ${
+                      user.email === currentUser?.email
+                        ? 'disabled title="You cannot delete your own account"'
+                        : ''
+                    }
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `).join('')
+        }
+      </tbody>
+    </table>
+  `;
+
+}
+
+
+
+/* -------------------------
    CREATE DRAWER
 ------------------------- */
 
 
 function openCreateDrawer() {
+
+  if (!isCreator()) {
+    return;
+  }
 
   editMode = false;
 
@@ -2883,7 +4279,7 @@ function openCreateDrawer() {
   document.getElementById(
     'drawerTitle'
   ).innerText =
-    'New Project';
+    'New Entry';
 
 
   document.getElementById(
@@ -3053,12 +4449,271 @@ function closeDrawer() {
     'active'
   );
 
+  document.getElementById(
+    'userDrawer'
+  ).classList.remove(
+    'active'
+  );
 
   document.getElementById(
     'overlay'
   ).classList.remove(
     'active'
   );
+
+  closeRejectModal();
+
+}
+
+
+
+function openUserDrawer() {
+
+  if (!isAdmin()) {
+    return;
+  }
+
+  userEditMode = false;
+
+  document.getElementById(
+    'userDrawerTitle'
+  ).textContent =
+    'Add CMS User';
+
+  document.getElementById(
+    'userDrawerNote'
+  ).textContent =
+    'Grant access to the CMS with an ADMIN, CREATOR, or VIEWER role.';
+
+  document.getElementById(
+    'userForm'
+  ).reset();
+
+  document.getElementById(
+    'userOriginalEmail'
+  ).value = '';
+
+  document.getElementById(
+    'userFormActive'
+  ).checked = true;
+
+  document.getElementById(
+    'userActiveGroup'
+  ).style.display = 'none';
+
+  document.getElementById(
+    'saveUserButton'
+  ).textContent = 'Add User';
+
+  document.getElementById(
+    'userDrawer'
+  ).classList.add(
+    'active'
+  );
+
+  document.getElementById(
+    'overlay'
+  ).classList.add(
+    'active'
+  );
+
+}
+
+
+function openEditUserDrawer(email) {
+
+  if (!isAdmin()) {
+    return;
+  }
+
+  const user = users.find(
+    item => item.email === email
+  );
+
+  if (!user) {
+    return;
+  }
+
+  userEditMode = true;
+
+  document.getElementById(
+    'userDrawerTitle'
+  ).textContent =
+    'Edit User';
+
+  document.getElementById(
+    'userDrawerNote'
+  ).textContent =
+    'Update role or access status for this CMS user.';
+
+  document.getElementById(
+    'userOriginalEmail'
+  ).value =
+    user.email;
+
+  document.getElementById(
+    'userFormEmail'
+  ).value =
+    user.email;
+
+  document.getElementById(
+    'userFormRole'
+  ).value =
+    user.role;
+
+  document.getElementById(
+    'userFormActive'
+  ).checked =
+    user.active;
+
+  document.getElementById(
+    'userActiveGroup'
+  ).style.display = 'block';
+
+  document.getElementById(
+    'saveUserButton'
+  ).textContent = 'Save Changes';
+
+  document.getElementById(
+    'userDrawer'
+  ).classList.add(
+    'active'
+  );
+
+  document.getElementById(
+    'overlay'
+  ).classList.add(
+    'active'
+  );
+
+}
+
+
+function closeUserDrawer() {
+
+  document.getElementById(
+    'userDrawer'
+  ).classList.remove(
+    'active'
+  );
+
+  document.getElementById(
+    'overlay'
+  ).classList.remove(
+    'active'
+  );
+
+}
+
+
+function submitUser(form) {
+
+  const button =
+    document.getElementById(
+      'saveUserButton'
+    );
+
+  const payload = {
+    email: document.getElementById('userFormEmail').value,
+    role: document.getElementById('userFormRole').value
+  };
+
+  if (userEditMode) {
+    payload.originalEmail =
+      document.getElementById('userOriginalEmail').value;
+    payload.active =
+      document.getElementById('userFormActive').checked;
+  }
+
+  button.disabled = true;
+  button.innerText = 'Saving...';
+
+  const runner =
+    google.script.run
+
+      .withSuccessHandler(
+        () => {
+
+          closeUserDrawer();
+
+          showToast(
+            userEditMode
+              ? 'User updated successfully.'
+              : 'User added successfully.'
+          );
+
+          button.disabled = false;
+          button.innerText =
+            userEditMode
+              ? 'Save Changes'
+              : 'Add User';
+
+          if (currentSection === 'users') {
+            loadUsers();
+          }
+
+        }
+      )
+
+      .withFailureHandler(
+        error => {
+
+          showToast(
+            error.message
+          );
+
+          button.disabled = false;
+          button.innerText =
+            userEditMode
+              ? 'Save Changes'
+              : 'Add User';
+
+        }
+      );
+
+  if (userEditMode) {
+    runner.updateUser(payload);
+  } else {
+    runner.addUser(payload);
+  }
+
+}
+
+
+function deleteUserAccount(email) {
+
+  if (
+    !confirm(
+      `Delete user "${email}"?\n\nThey will lose CMS access immediately.`
+    )
+  ) {
+    return;
+  }
+
+  google.script.run
+
+    .withSuccessHandler(
+      () => {
+
+        showToast(
+          'User deleted.'
+        );
+
+        loadUsers();
+
+      }
+    )
+
+    .withFailureHandler(
+      error =>
+        showToast(
+          error.message
+        )
+    )
+
+    .deleteUser(
+      email
+    );
 
 }
 
@@ -3354,6 +5009,185 @@ function archiveProject(
     )
 
     .requestArchive(
+      projectId
+    );
+
+}
+
+
+
+/* -------------------------
+   APPROVE / REJECT
+------------------------- */
+
+
+function approveVersion(versionId) {
+
+  if (
+    !confirm(
+      'Approve this submission?'
+    )
+  ) {
+    return;
+  }
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      () => {
+
+        showToast(
+          'Submission approved.'
+        );
+
+        loadProjects();
+
+      }
+    )
+
+    .withFailureHandler(
+      error =>
+        showToast(
+          error.message
+        )
+    )
+
+    .approveVersion(
+      versionId
+    );
+
+}
+
+
+function openRejectModal(versionId) {
+
+  document.getElementById(
+    'rejectVersionId'
+  ).value =
+    versionId;
+
+  document.getElementById(
+    'rejectReason'
+  ).value = '';
+
+  document.getElementById(
+    'rejectModal'
+  ).classList.add(
+    'active'
+  );
+
+}
+
+
+function closeRejectModal() {
+
+  document.getElementById(
+    'rejectModal'
+  ).classList.remove(
+    'active'
+  );
+
+}
+
+
+function confirmReject() {
+
+  const versionId =
+    document.getElementById(
+      'rejectVersionId'
+    ).value;
+
+  const reason =
+    document.getElementById(
+      'rejectReason'
+    ).value.trim();
+
+
+  if (!reason) {
+    showToast(
+      'A rejection reason is required.'
+    );
+    return;
+  }
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      () => {
+
+        closeRejectModal();
+
+        showToast(
+          'Submission rejected.'
+        );
+
+        loadProjects();
+
+      }
+    )
+
+    .withFailureHandler(
+      error =>
+        showToast(
+          error.message
+        )
+    )
+
+    .rejectVersion(
+      versionId,
+      reason
+    );
+
+}
+
+
+
+/* -------------------------
+   DELETE
+------------------------- */
+
+
+function deleteProject(
+  projectId,
+  projectName
+) {
+
+  const confirmed =
+    confirm(
+      `Permanently delete "${projectName}"?\n\n` +
+      `This removes the project, all versions, and related audit entries.`
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      () => {
+
+        showToast(
+          'Project deleted.'
+        );
+
+        loadProjects();
+
+      }
+    )
+
+    .withFailureHandler(
+      error =>
+        showToast(
+          error.message
+        )
+    )
+
+    .deleteProject(
       projectId
     );
 

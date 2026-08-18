@@ -7,7 +7,7 @@ function submitForApproval(versionId) {
 
   try {
 
-    const user = requireEditor_();
+    const user = requireCreator_();
 
     const versionsSheet =
       getSheet_(CONFIG.SHEETS.VERSIONS);
@@ -74,7 +74,7 @@ function approveVersion(versionId) {
 
   try {
 
-    const user = requireApprover_();
+    const user = requireAdmin_();
 
     const versions =
       getRowsAsObjects_(CONFIG.SHEETS.VERSIONS);
@@ -175,7 +175,7 @@ function rejectVersion(
 
   try {
 
-    const user = requireApprover_();
+    const user = requireAdmin_();
 
     if (
       !rejectionReason ||
@@ -247,7 +247,7 @@ function requestArchive(projectId) {
   try {
 
     const user =
-      requireEditor_();
+      requireCreator_();
 
 
     const projects =

@@ -5,7 +5,7 @@ function createProject(form) {
 
   try {
 
-    const user = requireEditor_();
+    const user = requireCreator_();
 
     if (!form.name || !String(form.name).trim()) {
       throw new Error('Project name is required.');
@@ -102,9 +102,6 @@ function getDashboardProjects() {
   const versions = getRowsAsObjects_(CONFIG.SHEETS.VERSIONS);
 
   const result = projects
-    .filter(project =>
-      String(project.archived).toUpperCase() !== 'TRUE'
-    )
     .map(project => {
 
       const projectVersions = versions
@@ -131,6 +128,9 @@ function getDashboardProjects() {
 
       return {
         projectId: project.projectId,
+
+        archived:
+          String(project.archived).toUpperCase() === 'TRUE',
 
         latestVersionId: latestVersion.versionId,
         latestVersion: Number(latestVersion.version),
@@ -185,7 +185,7 @@ function updateProject(form) {
 
   try {
 
-    const user = requireEditor_();
+    const user = requireCreator_();
 
     const projectId =
       String(form.projectId || '').trim();
