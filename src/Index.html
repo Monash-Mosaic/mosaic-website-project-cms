@@ -25,14 +25,19 @@
   --bg: #09090b;
   --surface: #111113;
   --surface-hover: #18181b;
+  --surface-elevated: rgba(18,18,24,.88);
+  --surface-soft: rgba(255,255,255,.03);
 
   --border: #27272a;
+  --border-strong: rgba(255,255,255,.10);
 
   --text: #fafafa;
   --muted: #a1a1aa;
+  --muted-soft: #71717a;
 
   --primary: #7c3aed;
   --primary-hover: #8b5cf6;
+  --primary-soft: rgba(124,58,237,.14);
 
   --danger: #ef4444;
   --danger-bg: rgba(239,68,68,.10);
@@ -73,6 +78,7 @@ body {
 
 body {
   min-height: 100vh;
+  background-attachment: fixed;
 }
 
 
@@ -96,7 +102,7 @@ textarea {
   margin: auto;
 
   padding:
-    36px 32px 80px;
+    32px 32px 80px;
 
 }
 
@@ -110,11 +116,8 @@ textarea {
 
   display: flex;
 
-  justify-content:
-    space-between;
-
-  align-items:
-    center;
+  flex-direction:
+    column;
 
   gap: 24px;
 
@@ -123,13 +126,142 @@ textarea {
 }
 
 
+.hero {
+
+  position: relative;
+
+  overflow: hidden;
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    flex-end;
+
+  gap: 24px;
+
+  padding:
+    28px;
+
+  border:
+    1px solid
+    var(--border-strong);
+
+  border-radius:
+    24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124,58,237,.22) 0%,
+      rgba(59,130,246,.10) 38%,
+      rgba(10,10,12,.92) 100%
+    );
+
+  box-shadow:
+    0 30px 70px rgba(0,0,0,.32);
+
+}
+
+
+.hero::before {
+
+  content: '';
+
+  position:
+    absolute;
+
+  inset:
+    auto -80px -80px auto;
+
+  width:
+    240px;
+
+  height:
+    240px;
+
+  border-radius:
+    999px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(139,92,246,.32) 0%,
+      rgba(139,92,246,0) 72%
+    );
+
+  pointer-events:
+    none;
+
+}
+
+
+.hero-copy,
+.hero-actions {
+  position: relative;
+  z-index: 1;
+}
+
+
+.hero-copy {
+  max-width: 780px;
+}
+
+
+.eyebrow {
+
+  display: inline-flex;
+
+  align-items:
+    center;
+
+  gap: 8px;
+
+  padding:
+    7px 12px;
+
+  margin-bottom:
+    16px;
+
+  border:
+    1px solid rgba(255,255,255,.10);
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(9,9,11,.42);
+
+  color:
+    #ddd6fe;
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    .08em;
+
+  text-transform:
+    uppercase;
+
+}
+
+
 .header-title h1 {
 
   margin: 0;
 
-  font-size: 30px;
+  font-size: 36px;
 
-  letter-spacing: -.7px;
+  letter-spacing: -1.2px;
+
+  line-height:
+    1.05;
 
 }
 
@@ -143,34 +275,203 @@ textarea {
     var(--muted);
 
   font-size:
-    14px;
+    15px;
+
+  line-height:
+    1.65;
+
+  max-width:
+    62ch;
+
+}
+
+
+.hero-metrics {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-top:
+    18px;
+
+}
+
+
+.hero-metric {
+
+  min-width: 130px;
+
+  padding:
+    14px 16px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  border-radius:
+    16px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  backdrop-filter:
+    blur(12px);
+
+}
+
+
+.hero-metric-label {
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    .08em;
+
+}
+
+
+.hero-metric-value {
+
+  margin-top:
+    8px;
+
+  font-size:
+    24px;
+
+  font-weight:
+    700;
+
+}
+
+
+.hero-actions {
+
+  display: flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    stretch;
+
+  gap: 14px;
+
+  min-width:
+    270px;
+
+}
+
+
+.hero-panel {
+
+  padding:
+    18px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  border-radius:
+    18px;
+
+  background:
+    rgba(7,7,10,.44);
+
+  backdrop-filter:
+    blur(12px);
+
+}
+
+
+.hero-panel-label {
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    .08em;
+
+}
+
+
+.hero-panel-value {
+
+  margin-top:
+    8px;
+
+  font-size:
+    20px;
+
+  font-weight:
+    700;
+
+}
+
+
+.hero-panel-text {
+
+  margin-top:
+    6px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
+
+  line-height:
+    1.55;
 
 }
 
 
 .new-button {
 
-  border: none;
+  border:
+    1px solid rgba(255,255,255,.08);
 
   color: white;
 
   background:
-    var(--primary);
+    linear-gradient(
+      135deg,
+      var(--primary) 0%,
+      #6d28d9 100%
+    );
 
   border-radius:
-    10px;
+    14px;
 
   padding:
-    12px 18px;
+    14px 18px;
 
   font-weight:
-    600;
+    700;
 
   cursor:
     pointer;
 
   transition:
-    .2s ease;
+    transform .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+
+  box-shadow:
+    0 16px 30px rgba(124,58,237,.28);
 
 }
 
@@ -178,10 +479,17 @@ textarea {
 .new-button:hover {
 
   background:
-    var(--primary-hover);
+    linear-gradient(
+      135deg,
+      var(--primary-hover) 0%,
+      #7c3aed 100%
+    );
 
   transform:
-    translateY(-1px);
+    translateY(-2px);
+
+  box-shadow:
+    0 20px 34px rgba(124,58,237,.34);
 
 }
 
@@ -199,7 +507,7 @@ textarea {
   grid-template-columns:
     repeat(4,1fr);
 
-  gap: 14px;
+  gap: 16px;
 
   margin-bottom:
     34px;
@@ -209,18 +517,62 @@ textarea {
 
 .stat {
 
+  position: relative;
+
   background:
-    rgba(17,17,19,.8);
+    linear-gradient(
+      180deg,
+      rgba(17,17,19,.92) 0%,
+      rgba(11,11,14,.92) 100%
+    );
 
   border:
     1px solid
     var(--border);
 
   border-radius:
-    12px;
+    18px;
 
   padding:
-    18px;
+    20px;
+
+  overflow:
+    hidden;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04);
+
+}
+
+
+.stat::after {
+
+  content: '';
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    0;
+
+  right:
+    0;
+
+  height:
+    3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(124,58,237,.92) 0%,
+      rgba(59,130,246,.92) 100%
+    );
+
+  opacity:
+    .9;
 
 }
 
@@ -239,13 +591,27 @@ textarea {
 .stat-value {
 
   font-size:
-    25px;
+    31px;
 
   font-weight:
     700;
 
   margin-top:
     6px;
+
+}
+
+
+.stat-subtext {
+
+  margin-top:
+    8px;
+
+  color:
+    var(--muted-soft);
+
+  font-size:
+    13px;
 
 }
 
@@ -260,7 +626,13 @@ textarea {
 
   display: flex;
 
-  gap: 12px;
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  gap: 18px;
 
   margin-bottom:
     24px;
@@ -268,25 +640,97 @@ textarea {
 }
 
 
+.toolbar-copy h2 {
+
+  margin:
+    0;
+
+  font-size:
+    20px;
+
+  letter-spacing:
+    -.4px;
+
+}
+
+
+.toolbar-copy p {
+
+  margin:
+    6px 0 0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    14px;
+
+}
+
+
+.toolbar-actions {
+
+  display: flex;
+
+  align-items:
+    center;
+
+  gap: 12px;
+
+}
+
+
+.search-wrap {
+
+  position:
+    relative;
+
+  width:
+    min(440px, 100%);
+
+}
+
+
+.search-icon {
+
+  position:
+    absolute;
+
+  top:
+    50%;
+
+  left:
+    14px;
+
+  transform:
+    translateY(-50%);
+
+  color:
+    var(--muted-soft);
+
+  pointer-events:
+    none;
+
+}
+
+
 .search {
 
-  flex: 1;
-
-  max-width:
-    420px;
+  width:
+    100%;
 
   padding:
-    11px 14px;
+    13px 16px 13px 42px;
 
   background:
-    var(--surface);
+    rgba(17,17,19,.88);
 
   border:
     1px solid
     var(--border);
 
   border-radius:
-    9px;
+    14px;
 
   color:
     white;
@@ -294,13 +738,78 @@ textarea {
   outline:
     none;
 
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+
 }
 
 
 .search:focus {
 
   border-color:
-    #52525b;
+    rgba(139,92,246,.75);
+
+  box-shadow:
+    0 0 0 4px rgba(124,58,237,.14);
+
+}
+
+
+.results-pill {
+
+  display: inline-flex;
+
+  align-items:
+    center;
+
+  gap: 8px;
+
+  padding:
+    12px 14px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    14px;
+
+  background:
+    rgba(17,17,19,.72);
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
+
+  white-space:
+    nowrap;
+
+}
+
+
+.results-dot {
+
+  width:
+    8px;
+
+  height:
+    8px;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6 0%,
+      #3b82f6 100%
+    );
+
+  box-shadow:
+    0 0 0 6px rgba(124,58,237,.12);
 
 }
 
@@ -324,6 +833,9 @@ textarea {
   gap:
     22px;
 
+  align-items:
+    start;
+
 }
 
 
@@ -335,21 +847,32 @@ textarea {
 
 .project-card {
 
+  position: relative;
+
   border:
     1px solid
     var(--border);
 
   border-radius:
-    16px;
+    20px;
 
   overflow:
     hidden;
 
   background:
-    var(--surface);
+    linear-gradient(
+      180deg,
+      rgba(19,19,24,.98) 0%,
+      rgba(12,12,16,.98) 100%
+    );
 
   transition:
-    .25s ease;
+    transform .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.18);
 
 }
 
@@ -357,10 +880,13 @@ textarea {
 .project-card:hover {
 
   border-color:
-    #3f3f46;
+    #52525b;
 
   transform:
-    translateY(-2px);
+    translateY(-4px);
+
+  box-shadow:
+    0 24px 46px rgba(0,0,0,.28);
 
 }
 
@@ -381,6 +907,32 @@ textarea {
 
   background:
     #18181b;
+
+}
+
+
+.project-image::after {
+
+  content: '';
+
+  position:
+    absolute;
+
+  inset:
+    auto 0 0 0;
+
+  height:
+    55%;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,.48) 100%
+    );
+
+  pointer-events:
+    none;
 
 }
 
@@ -414,7 +966,7 @@ textarea {
     13px;
 
   padding:
-    6px 9px;
+    7px 10px;
 
   border-radius:
     100px;
@@ -427,6 +979,9 @@ textarea {
 
   backdrop-filter:
     blur(10px);
+
+  border:
+    1px solid rgba(255,255,255,.08);
 
 }
 
@@ -479,7 +1034,51 @@ textarea {
 .project-body {
 
   padding:
-    19px;
+    20px;
+
+}
+
+
+.project-meta {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-bottom:
+    14px;
+
+}
+
+
+.meta-pill {
+
+  display: inline-flex;
+
+  align-items:
+    center;
+
+  gap: 6px;
+
+  padding:
+    7px 10px;
+
+  border:
+    1px solid rgba(255,255,255,.06);
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255,255,255,.03);
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
 
 }
 
@@ -487,13 +1086,16 @@ textarea {
 .project-name {
 
   font-size:
-    18px;
+    20px;
 
   font-weight:
     650;
 
   margin-bottom:
-    9px;
+    10px;
+
+  letter-spacing:
+    -.3px;
 
 }
 
@@ -509,8 +1111,20 @@ textarea {
   font-size:
     14px;
 
-  height:
-    65px;
+  min-height:
+    66px;
+
+  display:
+    -webkit-box;
+
+  line-clamp:
+    3;
+
+  -webkit-line-clamp:
+    3;
+
+  -webkit-box-orient:
+    vertical;
 
   overflow:
     hidden;
@@ -535,6 +1149,9 @@ textarea {
   text-decoration:
     none;
 
+  font-weight:
+    600;
+
 }
 
 
@@ -547,10 +1164,13 @@ textarea {
 .card-actions {
 
   display:
-    flex;
+    grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 
   gap:
-    8px;
+    10px;
 
   margin-top:
     20px;
@@ -560,14 +1180,11 @@ textarea {
 
 .action-button {
 
-  flex:
-    1;
-
   padding:
-    9px;
+    10px 12px;
 
   border-radius:
-    8px;
+    12px;
 
   cursor:
     pointer;
@@ -582,13 +1199,42 @@ textarea {
   color:
     #e4e4e7;
 
+  font-weight:
+    600;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease,
+    opacity .2s ease;
+
 }
 
 
 .action-button:hover {
 
   background:
-    #27272a;
+    #232329;
+
+  border-color:
+    #3f3f46;
+
+  transform:
+    translateY(-1px);
+
+}
+
+
+.action-button:disabled {
+
+  opacity:
+    .45;
+
+  cursor:
+    not-allowed;
+
+  transform:
+    none;
 
 }
 
@@ -605,6 +1251,20 @@ textarea {
 
   color:
     #c4b5fd;
+
+}
+
+
+.drawer-note {
+
+  margin-top:
+    6px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
 
 }
 
@@ -679,7 +1339,7 @@ textarea {
     min(500px,100%);
 
   background:
-    #101012;
+    #0f0f13;
 
   border-left:
     1px solid
@@ -813,7 +1473,7 @@ textarea {
     var(--border);
 
   border-radius:
-    9px;
+    12px;
 
   background:
     #18181b;
@@ -822,7 +1482,7 @@ textarea {
     white;
 
   padding:
-    12px;
+    12px 14px;
 
   outline:
     none;
@@ -879,7 +1539,7 @@ textarea.form-control {
     #3f3f46;
 
   border-radius:
-    10px;
+    14px;
 
   overflow:
     hidden;
@@ -919,10 +1579,14 @@ textarea.form-control {
     none;
 
   border-radius:
-    9px;
+    12px;
 
   background:
-    var(--primary);
+    linear-gradient(
+      135deg,
+      var(--primary) 0%,
+      #6d28d9 100%
+    );
 
   color:
     white;
@@ -939,7 +1603,11 @@ textarea.form-control {
 .form-button:hover {
 
   background:
-    var(--primary-hover);
+    linear-gradient(
+      135deg,
+      var(--primary-hover) 0%,
+      #7c3aed 100%
+    );
 
 }
 
@@ -953,19 +1621,47 @@ textarea.form-control {
 .loading {
 
   display:
-    flex;
+    grid;
 
-  align-items:
+  place-items:
     center;
 
-  justify-content:
-    center;
+  gap:
+    16px;
 
   min-height:
-    300px;
+    340px;
+
+  padding:
+    40px 20px;
 
   color:
     var(--muted);
+
+}
+
+
+.loading::before {
+
+  content: '';
+
+  width:
+    42px;
+
+  height:
+    42px;
+
+  border-radius:
+    999px;
+
+  border:
+    3px solid rgba(255,255,255,.08);
+
+  border-top-color:
+    #8b5cf6;
+
+  animation:
+    spin .9s linear infinite;
 
 }
 
@@ -982,7 +1678,7 @@ textarea.form-control {
     1 / -1;
 
   padding:
-    80px 20px;
+    56px 22px;
 
   text-align:
     center;
@@ -992,10 +1688,78 @@ textarea.form-control {
     var(--border);
 
   border-radius:
-    14px;
+    20px;
 
   color:
     var(--muted);
+
+  background:
+    rgba(17,17,19,.56);
+
+}
+
+
+.empty-title {
+
+  margin-top:
+    16px;
+
+  font-size:
+    22px;
+
+  font-weight:
+    700;
+
+  color:
+    var(--text);
+
+}
+
+
+.empty-text {
+
+  max-width:
+    48ch;
+
+  margin:
+    10px auto 0;
+
+  line-height:
+    1.65;
+
+}
+
+
+.empty-icon {
+
+  display: inline-grid;
+
+  place-items:
+    center;
+
+  width:
+    62px;
+
+  height:
+    62px;
+
+  margin:
+    0 auto;
+
+  border-radius:
+    18px;
+
+  background:
+    rgba(124,58,237,.12);
+
+  border:
+    1px solid rgba(124,58,237,.20);
+
+  color:
+    #ddd6fe;
+
+  font-size:
+    28px;
 
 }
 
@@ -1021,7 +1785,7 @@ textarea.form-control {
     translate(-50%,20px);
 
   background:
-    #27272a;
+    rgba(24,24,27,.96);
 
   border:
     1px solid
@@ -1031,7 +1795,7 @@ textarea.form-control {
     12px 18px;
 
   border-radius:
-    9px;
+    12px;
 
   opacity:
     0;
@@ -1044,6 +1808,18 @@ textarea.form-control {
 
   transition:
     .25s;
+
+  box-shadow:
+    0 14px 34px rgba(0,0,0,.34);
+
+}
+
+
+@keyframes spin {
+
+  to {
+    transform: rotate(360deg);
+  }
 
 }
 
@@ -1072,12 +1848,17 @@ textarea.form-control {
       25px 18px 60px;
   }
 
-  .header {
-    align-items:
-      flex-start;
+  .hero {
+    padding:
+      22px;
+  }
 
+  .hero,
+  .toolbar {
     flex-direction:
       column;
+    align-items:
+      stretch;
   }
 
   .stats {
@@ -1085,6 +1866,26 @@ textarea.form-control {
     grid-template-columns:
       repeat(2,1fr);
 
+  }
+
+  .hero-actions,
+  .search-wrap {
+    width:
+      100%;
+    min-width:
+      0;
+  }
+
+  .card-actions {
+    grid-template-columns:
+      1fr;
+  }
+
+  .results-pill {
+    width:
+      100%;
+    justify-content:
+      center;
   }
 
 }
@@ -1103,25 +1904,86 @@ textarea.form-control {
 
   <header class="header">
 
-    <div class="header-title">
+    <div class="hero">
 
-      <h1>Projects</h1>
+      <div class="hero-copy">
 
-      <p>
-        Manage projects displayed on your website.
-      </p>
+        <div class="eyebrow">
+          Website Content Manager
+        </div>
+
+        <div class="header-title">
+
+          <h1>Projects Dashboard</h1>
+
+          <p>
+            Review, update, and publish website projects from one place.
+            Track draft work, approval status, and live entries with a cleaner workflow.
+          </p>
+
+        </div>
+
+        <div class="hero-metrics">
+
+          <div class="hero-metric">
+            <div class="hero-metric-label">
+              Total Portfolio
+            </div>
+            <div
+              class="hero-metric-value"
+              id="heroProjectCount"
+            >
+              —
+            </div>
+          </div>
+
+          <div class="hero-metric">
+            <div class="hero-metric-label">
+              Ready To Review
+            </div>
+            <div
+              class="hero-metric-value"
+              id="heroPendingCount"
+            >
+              —
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-actions">
+
+        <div class="hero-panel">
+          <div class="hero-panel-label">
+            Workspace Summary
+          </div>
+          <div
+            class="hero-panel-value"
+            id="heroStatusLabel"
+          >
+            Loading...
+          </div>
+          <div
+            class="hero-panel-text"
+            id="heroStatusText"
+          >
+            Project metrics will appear once the dashboard loads.
+          </div>
+        </div>
+
+        <button
+          class="new-button"
+          onclick="openCreateDrawer()"
+        >
+          + New Project
+        </button>
+
+      </div>
 
     </div>
-
-
-    <button
-      class="new-button"
-      onclick="openCreateDrawer()"
-    >
-
-      + New Project
-
-    </button>
 
   </header>
 
@@ -1140,6 +2002,9 @@ textarea.form-control {
       >
         —
       </div>
+      <div class="stat-subtext">
+        All visible projects in the CMS.
+      </div>
     </div>
 
 
@@ -1153,6 +2018,9 @@ textarea.form-control {
         id="liveCount"
       >
         —
+      </div>
+      <div class="stat-subtext">
+        Currently approved and live on site.
       </div>
     </div>
 
@@ -1168,6 +2036,9 @@ textarea.form-control {
       >
         —
       </div>
+      <div class="stat-subtext">
+        Drafts and rejected updates needing work.
+      </div>
     </div>
 
 
@@ -1182,6 +2053,9 @@ textarea.form-control {
       >
         —
       </div>
+      <div class="stat-subtext">
+        Awaiting approver action.
+      </div>
     </div>
 
   </section>
@@ -1190,13 +2064,37 @@ textarea.form-control {
 
   <section class="toolbar">
 
-    <input
-      type="search"
-      id="search"
-      class="search"
-      placeholder="Search projects..."
-      oninput="renderProjects()"
-    >
+    <div class="toolbar-copy">
+      <h2>Project Library</h2>
+      <p>
+        Search by project name or description and jump back into editing quickly.
+      </p>
+    </div>
+
+    <div class="toolbar-actions">
+      <div class="search-wrap">
+        <span class="search-icon">
+          🔎
+        </span>
+        <input
+          type="search"
+          id="search"
+          class="search"
+          placeholder="Search projects..."
+          oninput="renderProjects()"
+        >
+      </div>
+
+      <div
+        class="results-pill"
+        id="resultsPill"
+      >
+        <span class="results-dot"></span>
+        <span id="resultsLabel">
+          Loading projects...
+        </span>
+      </div>
+    </div>
 
   </section>
 
@@ -1236,9 +2134,14 @@ textarea.form-control {
 
   <div class="drawer-header">
 
-    <h2 id="drawerTitle">
-      New Project
-    </h2>
+    <div>
+      <h2 id="drawerTitle">
+        New Project
+      </h2>
+      <div class="drawer-note">
+        Save your work as a draft before sending it for approval.
+      </div>
+    </div>
 
     <button
       class="close-button"
@@ -1524,38 +2427,98 @@ function loadProjects() {
 
 function updateStats() {
 
-  document.getElementById(
-    'totalCount'
-  ).innerText =
+  const total =
     projects.length;
 
-
-  document.getElementById(
-    'liveCount'
-  ).innerText =
+  const live =
     projects.filter(
       p => p.isLive
     ).length;
 
-
-  document.getElementById(
-    'draftCount'
-  ).innerText =
+  const draft =
     projects.filter(
       p =>
         p.status === 'DRAFT' ||
         p.status === 'REJECTED'
     ).length;
 
-
-  document.getElementById(
-    'pendingCount'
-  ).innerText =
+  const pending =
     projects.filter(
       p =>
         p.status ===
         'PENDING_APPROVAL'
     ).length;
+
+  document.getElementById(
+    'totalCount'
+  ).innerText =
+    total;
+
+
+  document.getElementById(
+    'liveCount'
+  ).innerText =
+    live;
+
+
+  document.getElementById(
+    'draftCount'
+  ).innerText =
+    draft;
+
+
+  document.getElementById(
+    'pendingCount'
+  ).innerText =
+    pending;
+
+
+  document.getElementById(
+    'heroProjectCount'
+  ).innerText =
+    total;
+
+  document.getElementById(
+    'heroPendingCount'
+  ).innerText =
+    pending;
+
+
+  const heroStatusLabel =
+    document.getElementById(
+      'heroStatusLabel'
+    );
+
+  const heroStatusText =
+    document.getElementById(
+      'heroStatusText'
+    );
+
+  if (pending > 0) {
+
+    heroStatusLabel.innerText =
+      `${pending} item${pending === 1 ? '' : 's'} waiting`;
+
+    heroStatusText.innerText =
+      'Pending submissions are ready for approver review.';
+
+  } else if (draft > 0) {
+
+    heroStatusLabel.innerText =
+      `${draft} draft${draft === 1 ? '' : 's'} in progress`;
+
+    heroStatusText.innerText =
+      'Everything is clear for approval, but draft work is still open.';
+
+  } else {
+
+    heroStatusLabel.innerText =
+      'All caught up';
+
+    heroStatusText.innerText =
+      'No pending approvals or draft changes need attention right now.';
+
+  }
 
 }
 
@@ -1604,13 +2567,26 @@ function renderProjects() {
     );
 
 
+  document.getElementById(
+    'resultsLabel'
+  ).innerText =
+    query
+      ? `${filtered.length} result${filtered.length === 1 ? '' : 's'} for "${query}"`
+      : `${projects.length} project${projects.length === 1 ? '' : 's'} in view`;
+
+
   if (!filtered.length) {
 
     container.innerHTML = `
 
       <div class="empty">
-
-        No projects found.
+        <div class="empty-icon">⌕</div>
+        <div class="empty-title">
+          No projects found
+        </div>
+        <div class="empty-text">
+          Try a different keyword, or create a new project to start building out the portfolio.
+        </div>
 
       </div>
 
@@ -1661,6 +2637,22 @@ function createProjectCard(project) {
     project.status === 'REJECTED';
 
 
+  const versionLabel =
+    `v${project.latestVersion || 1}`;
+
+  const liveLabel =
+    project.isLive
+      ? 'Live on website'
+      : 'Not live yet';
+
+  const changeLabel =
+    project.changeType === 'ARCHIVE'
+      ? 'Archive request'
+      : project.changeType === 'UPDATE'
+        ? 'Update draft'
+        : 'New project';
+
+
   return `
 
     <article class="project-card">
@@ -1699,6 +2691,18 @@ function createProjectCard(project) {
 
 
       <div class="project-body">
+
+        <div class="project-meta">
+          <span class="meta-pill">
+            ${versionLabel}
+          </span>
+          <span class="meta-pill">
+            ${liveLabel}
+          </span>
+          <span class="meta-pill">
+            ${changeLabel}
+          </span>
+        </div>
 
 
         <div class="project-name">
@@ -1887,6 +2891,11 @@ function openCreateDrawer() {
   ).innerText =
     'Save Draft';
 
+  document.getElementById(
+    'drawerTitle'
+  ).nextElementSibling.innerText =
+    'Create a draft entry with a title, description, link, and WebP cover image.';
+
 
   const form =
     document.getElementById(
@@ -1949,6 +2958,11 @@ function openEditDrawer(
     'saveButton'
   ).innerText =
     'Save Update Draft';
+
+  document.getElementById(
+    'drawerTitle'
+  ).nextElementSibling.innerText =
+    'Update the current project details and save the next version as a draft.';
 
 
   document.getElementById(
