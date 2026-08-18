@@ -1,0 +1,71 @@
+name: Deploy Project CMS
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: project-cms-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy Apps Script
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure clasp
+        shell: bash
+        run: |
+          printf '%s' '${{ secrets.CLASPRC_JSON }}' > "$HOME/.clasprc.json"
+          printf '%s' '${{ secrets.CLASP_JSON }}' > .clasp.json
+
+      - name: Check clasp authentication
+        run: npx @google/clasp show-authorized-user
+
+      - name: Show files to deploy
+        run: npx @google/clasp show-file-status
+
+      - name: Push source to Apps Script
+        run: npx @google/clasp push --force
+
+      - name: Create Apps Script version
+        id: version
+        shell: bash
+        run: |
+          OUTPUT=$(npx @google/clasp create-version "GitHub $GITHUB_SHA")
+          echo "$OUTPUT"
+
+          VERSION=$(echo "$OUTPUT" | grep -oE '[0-9]+' | tail -1)
+
+          if [ -z "$VERSION" ]; then
+            echo "Unable to determine Apps Script version"
+            exit 1
+          fi
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy version
+        run: |
+          npx @google/clasp create-deployment \
+            --deploymentId "${{ secrets.APPS_SCRIPT_DEPLOYMENT_ID }}" \
+            --versionNumber "${{ steps.version.outputs.version }}" \
+            --description "GitHub ${{ github.sha }}"
