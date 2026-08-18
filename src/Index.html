@@ -3754,6 +3754,16 @@ function loadProjects() {
       message: 'Loading entries...',
       onSuccess: data => {
 
+        if (!data) {
+          document
+            .getElementById('projects')
+            .innerHTML =
+              `<div class="empty">
+                Failed to load entries. Please refresh.
+              </div>`;
+          return;
+        }
+
         projects =
           data.projects || [];
 

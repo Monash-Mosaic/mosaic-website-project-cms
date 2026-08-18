@@ -138,26 +138,26 @@ function getDashboardProjects() {
           String(project.archived).toUpperCase() === 'TRUE',
 
         latestVersionId: latestVersion.versionId,
-        latestVersion: Number(latestVersion.version),
+        latestVersion: Number(latestVersion.version) || 0,
 
-        name: latestVersion.name,
-        subtitle: latestVersion.subtitle || '',
-        description: latestVersion.description,
+        name: String(latestVersion.name || ''),
+        subtitle: String(latestVersion.subtitle || ''),
+        description: String(latestVersion.description || ''),
 
-        imageFileId: latestVersion.imageFileId,
+        imageFileId: latestVersion.imageFileId || '',
         imageUrl: getProjectImageUrl_(
           latestVersion.imageFileId
-        ),
+        ) || '',
 
-        link: latestVersion.link,
+        link: String(latestVersion.link || ''),
 
-        status: latestVersion.status,
-        changeType: latestVersion.changeType,
+        status: String(latestVersion.status || ''),
+        changeType: String(latestVersion.changeType || ''),
 
         currentVersion:
           project.currentVersion === ''
-            ? null
-            : Number(project.currentVersion),
+            ? ''
+            : Number(project.currentVersion) || '',
 
         isLive: Boolean(liveVersion),
 
