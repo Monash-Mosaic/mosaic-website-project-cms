@@ -346,3 +346,71 @@ function updateProject(form) {
   }
 }
 
+function getPublishedProjects_() {
+  const projects =
+    getRowsAsObjects_(CONFIG.SHEETS.PROJECTS);
+
+  const versions =
+    getRowsAsObjects_(CONFIG.SHEETS.VERSIONS);
+
+  return projects
+    .filter(project => {
+      return (
+        String(project.archived).toUpperCase() !== 'TRUE' &&
+        project.currentVersion !== ''
+      );
+    })
+    .map(project => {
+      const version = versions.find(v =>
+        v.projectId === project.projectId &&
+        Number(v.version) === Number(project.currentVersion) &&
+        v.status === CONFIG.STATUS.APPROVED
+      );
+
+      if (!version) {
+        return null;
+      }
+
+      return {
+        id: project.projectId,
+        name: version.name,
+        description: version.description,
+        image: getProjectImageUrl_(
+          version.imageFileId
+        ),
+        link: version.link
+      };
+    })
+    .filter(Boolean);
+}
+
+function getPublishedProjectsResponse_() {
+  try {
+    const projects =
+      getPublishedProjects_();
+
+    return ContentService
+      .createTextOutput(
+        JSON.stringify({
+          success: true,
+          projects: projects
+        })
+      )
+      .setMimeType(
+        ContentService.MimeType.JSON
+      );
+
+  } catch (error) {
+
+    return ContentService
+      .createTextOutput(
+        JSON.stringify({
+          success: false,
+          error: error.message
+        })
+      )
+      .setMimeType(
+        ContentService.MimeType.JSON
+      );
+  }
+}
