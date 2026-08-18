@@ -2398,7 +2398,7 @@ textarea.form-control {
     3px solid rgba(255,255,255,.08);
 
   border-top-color:
-    #8b5cf6;
+    var(--primary);
 
   animation:
     spin .9s linear infinite;
@@ -2506,6 +2506,133 @@ textarea.form-control {
 
 
 /* --------------------------------
+   ACTION LOADER
+-------------------------------- */
+
+
+.loader-overlay {
+
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  background:
+    rgba(9,9,11,.62);
+
+  backdrop-filter:
+    blur(6px);
+
+  opacity:
+    0;
+
+  pointer-events:
+    none;
+
+  z-index:
+    250;
+
+  transition:
+    opacity .2s ease;
+
+}
+
+
+.loader-overlay.active {
+
+  opacity:
+    1;
+
+  pointer-events:
+    auto;
+
+}
+
+
+.loader-card {
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  gap:
+    16px;
+
+  min-width:
+    220px;
+
+  padding:
+    28px 32px;
+
+  background:
+    rgba(17,17,19,.96);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    18px;
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.4);
+
+}
+
+
+.loader-spinner {
+
+  width:
+    42px;
+
+  height:
+    42px;
+
+  border-radius:
+    999px;
+
+  border:
+    3px solid rgba(255,255,255,.08);
+
+  border-top-color:
+    var(--primary);
+
+  animation:
+    spin .9s linear infinite;
+
+}
+
+
+.loader-message {
+
+  color:
+    var(--text);
+
+  font-size:
+    14px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    .01em;
+
+}
+
+
+
+/* --------------------------------
    TOAST
 -------------------------------- */
 
@@ -2544,7 +2671,7 @@ textarea.form-control {
     none;
 
   z-index:
-    200;
+    260;
 
   transition:
     .25s;
@@ -3320,6 +3447,27 @@ textarea.form-control {
 ></div>
 
 
+<div
+  id="loaderOverlay"
+  class="loader-overlay"
+  aria-hidden="true"
+  aria-busy="false"
+  role="status"
+>
+
+  <div class="loader-card">
+    <div class="loader-spinner"></div>
+    <div
+      class="loader-message"
+      id="loaderMessage"
+    >
+      Working...
+    </div>
+  </div>
+
+</div>
+
+
 
 <script>
 
@@ -3392,6 +3540,108 @@ let currentSection = 'projects';
 
 let projectFilter = 'all';
 
+let loaderCount = 0;
+
+
+
+/* -------------------------
+   ACTION LOADER
+------------------------- */
+
+
+function showLoader(message) {
+
+  loaderCount++;
+
+  const overlay =
+    document.getElementById(
+      'loaderOverlay'
+    );
+
+  const text =
+    document.getElementById(
+      'loaderMessage'
+    );
+
+  if (text) {
+    text.textContent =
+      message || 'Working...';
+  }
+
+  overlay.classList.add('active');
+  overlay.setAttribute('aria-hidden', 'false');
+  overlay.setAttribute('aria-busy', 'true');
+
+}
+
+
+function hideLoader() {
+
+  loaderCount =
+    Math.max(0, loaderCount - 1);
+
+  if (loaderCount > 0) {
+    return;
+  }
+
+  const overlay =
+    document.getElementById(
+      'loaderOverlay'
+    );
+
+  overlay.classList.remove('active');
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.setAttribute('aria-busy', 'false');
+
+}
+
+
+function runScript(method, args, options) {
+
+  const opts = options || {};
+
+  showLoader(
+    opts.message || 'Working...'
+  );
+
+  const runner =
+    google.script.run
+
+      .withSuccessHandler(
+        result => {
+
+          try {
+            if (opts.onSuccess) {
+              opts.onSuccess(result);
+            }
+          } finally {
+            hideLoader();
+          }
+
+        }
+      )
+
+      .withFailureHandler(
+        error => {
+
+          hideLoader();
+
+          if (opts.onFailure) {
+            opts.onFailure(error);
+          } else {
+            showToast(error.message);
+          }
+
+        }
+      );
+
+  runner[method].apply(
+    runner,
+    args || []
+  );
+
+}
+
 
 
 /* -------------------------
@@ -3456,10 +3706,12 @@ function showLocalDevBanner() {
 
 function loadProjects() {
 
-  google.script.run
-
-    .withSuccessHandler(
-      data => {
+  runScript(
+    'getDashboardProjects',
+    [],
+    {
+      message: 'Loading entries...',
+      onSuccess: data => {
 
         projects =
           data.projects || [];
@@ -3477,11 +3729,8 @@ function loadProjects() {
 
         renderProjects();
 
-      }
-    )
-
-    .withFailureHandler(
-      error => {
+      },
+      onFailure: error => {
 
         document
           .getElementById('projects')
@@ -3491,9 +3740,8 @@ function loadProjects() {
             </div>`;
 
       }
-    )
-
-    .getDashboardProjects();
+    }
+  );
 
 }
 
@@ -4146,20 +4394,19 @@ function loadUsers() {
     return;
   }
 
-  google.script.run
-
-    .withSuccessHandler(
-      data => {
+  runScript(
+    'listUsers',
+    [],
+    {
+      message: 'Loading users...',
+      onSuccess: data => {
 
         users = data || [];
 
         renderUsers();
 
-      }
-    )
-
-    .withFailureHandler(
-      error => {
+      },
+      onFailure: error => {
 
         document
           .getElementById('usersContainer')
@@ -4169,9 +4416,8 @@ function loadUsers() {
             </div>`;
 
       }
-    )
-
-    .listUsers();
+    }
+  );
 
 }
 
@@ -4628,54 +4874,49 @@ function submitUser(form) {
   button.disabled = true;
   button.innerText = 'Saving...';
 
-  const runner =
-    google.script.run
+  runScript(
+    userEditMode ? 'updateUser' : 'addUser',
+    [payload],
+    {
+      message: userEditMode
+        ? 'Saving user...'
+        : 'Adding user...',
+      onSuccess: () => {
 
-      .withSuccessHandler(
-        () => {
+        closeUserDrawer();
 
-          closeUserDrawer();
+        showToast(
+          userEditMode
+            ? 'User updated successfully.'
+            : 'User added successfully.'
+        );
 
-          showToast(
-            userEditMode
-              ? 'User updated successfully.'
-              : 'User added successfully.'
-          );
+        button.disabled = false;
+        button.innerText =
+          userEditMode
+            ? 'Save Changes'
+            : 'Add User';
 
-          button.disabled = false;
-          button.innerText =
-            userEditMode
-              ? 'Save Changes'
-              : 'Add User';
-
-          if (currentSection === 'users') {
-            loadUsers();
-          }
-
+        if (currentSection === 'users') {
+          loadUsers();
         }
-      )
 
-      .withFailureHandler(
-        error => {
+      },
+      onFailure: error => {
 
-          showToast(
-            error.message
-          );
+        showToast(
+          error.message
+        );
 
-          button.disabled = false;
-          button.innerText =
-            userEditMode
-              ? 'Save Changes'
-              : 'Add User';
+        button.disabled = false;
+        button.innerText =
+          userEditMode
+            ? 'Save Changes'
+            : 'Add User';
 
-        }
-      );
-
-  if (userEditMode) {
-    runner.updateUser(payload);
-  } else {
-    runner.addUser(payload);
-  }
+      }
+    }
+  );
 
 }
 
@@ -4690,10 +4931,12 @@ function deleteUserAccount(email) {
     return;
   }
 
-  google.script.run
-
-    .withSuccessHandler(
-      () => {
+  runScript(
+    'deleteUser',
+    [email],
+    {
+      message: 'Deleting user...',
+      onSuccess: () => {
 
         showToast(
           'User deleted.'
@@ -4702,18 +4945,8 @@ function deleteUserAccount(email) {
         loadUsers();
 
       }
-    )
-
-    .withFailureHandler(
-      error =>
-        showToast(
-          error.message
-        )
-    )
-
-    .deleteUser(
-      email
-    );
+    }
+  );
 
 }
 
@@ -4859,60 +5092,46 @@ function submitProject(form) {
     'Saving...';
 
 
-  const runner =
-    google.script.run
+  runScript(
+    editMode ? 'updateProject' : 'createProject',
+    [form],
+    {
+      message: editMode
+        ? 'Saving draft...'
+        : 'Creating entry...',
+      onSuccess: () => {
 
-      .withSuccessHandler(
-        () => {
+        closeDrawer();
 
-          closeDrawer();
+        showToast(
+          editMode
+            ? 'Update saved as draft.'
+            : 'Project created as draft.'
+        );
 
-          showToast(
-            editMode
-              ? 'Update saved as draft.'
-              : 'Project created as draft.'
-          );
+        button.disabled =
+          false;
 
-          button.disabled =
-            false;
+        loadProjects();
 
-          loadProjects();
+      },
+      onFailure: error => {
 
-        }
-      )
+        showToast(
+          error.message
+        );
 
-      .withFailureHandler(
-        error => {
+        button.disabled =
+          false;
 
-          showToast(
-            error.message
-          );
+        button.innerText =
+          editMode
+            ? 'Save Update Draft'
+            : 'Save Draft';
 
-          button.disabled =
-            false;
-
-          button.innerText =
-            editMode
-              ? 'Save Update Draft'
-              : 'Save Draft';
-
-        }
-      );
-
-
-  if (editMode) {
-
-    runner.updateProject(
-      form
-    );
-
-  } else {
-
-    runner.createProject(
-      form
-    );
-
-  }
+      }
+    }
+  );
 
 }
 
@@ -4936,10 +5155,12 @@ function submitVersion(
   }
 
 
-  google.script.run
-
-    .withSuccessHandler(
-      () => {
+  runScript(
+    'submitForApproval',
+    [versionId],
+    {
+      message: 'Submitting for approval...',
+      onSuccess: () => {
 
         showToast(
           'Submitted for approval.'
@@ -4948,18 +5169,8 @@ function submitVersion(
         loadProjects();
 
       }
-    )
-
-    .withFailureHandler(
-      error =>
-        showToast(
-          error.message
-        )
-    )
-
-    .submitForApproval(
-      versionId
-    );
+    }
+  );
 
 }
 
@@ -4987,10 +5198,12 @@ function archiveProject(
   }
 
 
-  google.script.run
-
-    .withSuccessHandler(
-      () => {
+  runScript(
+    'requestArchive',
+    [projectId],
+    {
+      message: 'Submitting archive request...',
+      onSuccess: () => {
 
         showToast(
           'Archive request submitted.'
@@ -4999,18 +5212,8 @@ function archiveProject(
         loadProjects();
 
       }
-    )
-
-    .withFailureHandler(
-      error =>
-        showToast(
-          error.message
-        )
-    )
-
-    .requestArchive(
-      projectId
-    );
+    }
+  );
 
 }
 
@@ -5032,10 +5235,12 @@ function approveVersion(versionId) {
   }
 
 
-  google.script.run
-
-    .withSuccessHandler(
-      () => {
+  runScript(
+    'approveVersion',
+    [versionId],
+    {
+      message: 'Approving submission...',
+      onSuccess: () => {
 
         showToast(
           'Submission approved.'
@@ -5044,18 +5249,8 @@ function approveVersion(versionId) {
         loadProjects();
 
       }
-    )
-
-    .withFailureHandler(
-      error =>
-        showToast(
-          error.message
-        )
-    )
-
-    .approveVersion(
-      versionId
-    );
+    }
+  );
 
 }
 
@@ -5112,10 +5307,12 @@ function confirmReject() {
   }
 
 
-  google.script.run
-
-    .withSuccessHandler(
-      () => {
+  runScript(
+    'rejectVersion',
+    [versionId, reason],
+    {
+      message: 'Rejecting submission...',
+      onSuccess: () => {
 
         closeRejectModal();
 
@@ -5126,19 +5323,8 @@ function confirmReject() {
         loadProjects();
 
       }
-    )
-
-    .withFailureHandler(
-      error =>
-        showToast(
-          error.message
-        )
-    )
-
-    .rejectVersion(
-      versionId,
-      reason
-    );
+    }
+  );
 
 }
 
@@ -5166,10 +5352,12 @@ function deleteProject(
   }
 
 
-  google.script.run
-
-    .withSuccessHandler(
-      () => {
+  runScript(
+    'deleteProject',
+    [projectId],
+    {
+      message: 'Deleting entry...',
+      onSuccess: () => {
 
         showToast(
           'Project deleted.'
@@ -5178,18 +5366,8 @@ function deleteProject(
         loadProjects();
 
       }
-    )
-
-    .withFailureHandler(
-      error =>
-        showToast(
-          error.message
-        )
-    )
-
-    .deleteProject(
-      projectId
-    );
+    }
+  );
 
 }
 
