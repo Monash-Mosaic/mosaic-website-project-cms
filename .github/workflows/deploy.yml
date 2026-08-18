@@ -1,11 +1,12 @@
 name: Deploy Project CMS
 
 on:
-  push:
-    branches:
-      - main
-
   workflow_dispatch:
+    inputs:
+      description:
+        description: "Deployment description"
+        required: false
+        default: "Manual GitHub deployment"
 
 permissions:
   contents: read
@@ -38,10 +39,10 @@ jobs:
           printf '%s' '${{ secrets.CLASPRC_JSON }}' > "$HOME/.clasprc.json"
           printf '%s' '${{ secrets.CLASP_JSON }}' > .clasp.json
 
-      - name: Check clasp authentication
+      - name: Verify clasp authentication
         run: npx @google/clasp show-authorized-user
 
-      - name: Show files to deploy
+      - name: Show current Apps Script status
         run: npx @google/clasp show-file-status
 
       - name: Push source to Apps Script
@@ -51,21 +52,28 @@ jobs:
         id: version
         shell: bash
         run: |
-          OUTPUT=$(npx @google/clasp create-version "GitHub $GITHUB_SHA")
+          OUTPUT=$(npx @google/clasp create-version "${{ inputs.description }} - $GITHUB_SHA")
+
           echo "$OUTPUT"
 
           VERSION=$(echo "$OUTPUT" | grep -oE '[0-9]+' | tail -1)
 
           if [ -z "$VERSION" ]; then
-            echo "Unable to determine Apps Script version"
+            echo "Could not determine Apps Script version."
             exit 1
           fi
 
+          echo "Created Apps Script version: $VERSION"
+
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Deploy version
+      - name: Update production deployment
+        shell: bash
         run: |
-          npx @google/clasp create-deployment \
-            --deploymentId "${{ secrets.APPS_SCRIPT_DEPLOYMENT_ID }}" \
+          npx @google/clasp update-deployment \
+            "${{ secrets.APPS_SCRIPT_DEPLOYMENT_ID }}" \
             --versionNumber "${{ steps.version.outputs.version }}" \
-            --description "GitHub ${{ github.sha }}"
+            --description "${{ inputs.description }} - GitHub $GITHUB_SHA"
+
+      - name: Show deployments
+        run: npx @google/clasp list-deployments
