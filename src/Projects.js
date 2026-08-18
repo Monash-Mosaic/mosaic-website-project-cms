@@ -106,82 +106,102 @@ function getDashboardProjects() {
   const projects = getRowsAsObjects_(CONFIG.SHEETS.PROJECTS);
   const versions = getRowsAsObjects_(CONFIG.SHEETS.VERSIONS);
 
-  const result = projects
-    .map(project => {
+  const result = [];
 
-      const projectVersions = versions
-        .filter(v => v.projectId === project.projectId)
-        .sort((a, b) => Number(b.version) - Number(a.version));
+  projects.forEach(project => {
+    try {
+      const mapped = mapDashboardProject_(project, versions);
 
-      if (projectVersions.length === 0) {
-        return null;
+      if (mapped) {
+        result.push(mapped);
       }
+    } catch (error) {
+      // Skip a corrupt row instead of failing the whole dashboard.
+    }
+  });
 
-      // Latest version is what the CMS user sees.
-      const latestVersion = projectVersions[0];
-
-      // Current approved/live version.
-      let liveVersion = null;
-
-      if (project.currentVersion !== '') {
-        liveVersion = projectVersions.find(
-          v =>
-            Number(v.version) ===
-            Number(project.currentVersion)
-        );
-      }
-
-      return {
-        projectId: project.projectId,
-
-        archived:
-          String(project.archived).toUpperCase() === 'TRUE',
-
-        latestVersionId: latestVersion.versionId,
-        latestVersion: Number(latestVersion.version) || 0,
-
-        name: String(latestVersion.name || ''),
-        subtitle: String(latestVersion.subtitle || ''),
-        description: String(latestVersion.description || ''),
-
-        imageFileId: latestVersion.imageFileId || '',
-        imageUrl: getProjectImageUrl_(
-          latestVersion.imageFileId
-        ) || '',
-
-        link: String(latestVersion.link || ''),
-
-        status: String(latestVersion.status || ''),
-        changeType: String(latestVersion.changeType || ''),
-
-        currentVersion:
-          project.currentVersion === ''
-            ? ''
-            : Number(project.currentVersion) || '',
-
-        isLive: Boolean(liveVersion),
-
-        createdAt: project.createdAt
-          ? String(project.createdAt)
-          : '',
-
-        submittedBy:
-          latestVersion.submittedBy || '',
-
-        approvedBy:
-          latestVersion.approvedBy || '',
-
-        rejectionReason:
-          latestVersion.rejectionReason || ''
-      };
-
-    })
-    .filter(Boolean);
-
-  return {
+  return toClientPayload_({
     user: user,
     projects: result
+  });
+}
+
+function mapDashboardProject_(project, versions) {
+  const projectId = String(project.projectId || '').trim();
+
+  if (!projectId) {
+    return null;
+  }
+
+  const projectVersions = versions
+    .filter(v => String(v.projectId || '') === projectId)
+    .sort((a, b) => Number(b.version) - Number(a.version));
+
+  if (projectVersions.length === 0) {
+    return null;
+  }
+
+  const latestVersion = projectVersions[0];
+  const currentVersionValue = String(project.currentVersion || '').trim();
+  const currentVersionNumber = Number(currentVersionValue);
+
+  const liveVersion =
+    currentVersionValue !== '' && isFinite(currentVersionNumber)
+      ? projectVersions.find(
+          v => Number(v.version) === currentVersionNumber
+        )
+      : undefined;
+
+  return {
+    projectId: projectId,
+
+    archived:
+      String(project.archived).toUpperCase() === 'TRUE',
+
+    latestVersionId: String(latestVersion.versionId || ''),
+    latestVersion: Number(latestVersion.version) || 0,
+
+    name: String(latestVersion.name || ''),
+    subtitle: String(latestVersion.subtitle || ''),
+    description: String(latestVersion.description || ''),
+
+    imageFileId: String(latestVersion.imageFileId || ''),
+    imageUrl: getProjectImageUrl_(latestVersion.imageFileId),
+
+    link: String(latestVersion.link || ''),
+
+    status: String(latestVersion.status || ''),
+    changeType: String(latestVersion.changeType || ''),
+
+    currentVersion:
+      currentVersionValue !== '' && isFinite(currentVersionNumber)
+        ? currentVersionNumber
+        : '',
+
+    isLive: Boolean(liveVersion),
+
+    createdAt: formatClientDate_(project.createdAt),
+
+    submittedBy: String(latestVersion.submittedBy || ''),
+    approvedBy: String(latestVersion.approvedBy || ''),
+    rejectionReason: String(latestVersion.rejectionReason || '')
   };
+}
+
+function formatClientDate_(value) {
+  if (!value) {
+    return '';
+  }
+
+  if (Object.prototype.toString.call(value) === '[object Date]') {
+    if (isNaN(value.getTime())) {
+      return '';
+    }
+
+    return value.toISOString();
+  }
+
+  return String(value);
 }
 
 function updateProject(form) {

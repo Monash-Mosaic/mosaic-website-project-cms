@@ -60,5 +60,5 @@ function requireAdmin_() {
 }
 
 function getMyUser() {
-  return getCurrentUser_();
+  return toClientPayload_(getCurrentUser_());
 }

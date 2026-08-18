@@ -3640,46 +3640,78 @@ function hideLoader() {
 function runScript(method, args, options) {
 
   const opts = options || {};
+  const params = args || [];
 
   showLoader(
     opts.message || 'Working...'
   );
 
-  const runner =
-    google.script.run
+  try {
 
-      .withSuccessHandler(
-        result => {
+    const runner =
+      google.script.run
 
-          try {
-            if (opts.onSuccess) {
-              opts.onSuccess(result);
+        .withSuccessHandler(
+          result => {
+
+            try {
+              if (opts.onSuccess) {
+                opts.onSuccess(result);
+              }
+            } finally {
+              hideLoader();
             }
-          } finally {
+
+          }
+        )
+
+        .withFailureHandler(
+          error => {
+
             hideLoader();
+
+            const message =
+              (error && error.message) ||
+              String(error || 'Something went wrong.');
+
+            if (opts.onFailure) {
+              opts.onFailure({
+                message: message
+              });
+            } else {
+              showToast(message);
+            }
+
           }
+        );
 
-        }
-      )
+    if (params.length === 0) {
+      runner[method]();
+    } else if (params.length === 1) {
+      runner[method](params[0]);
+    } else if (params.length === 2) {
+      runner[method](params[0], params[1]);
+    } else {
+      runner[method](...params);
+    }
 
-      .withFailureHandler(
-        error => {
+  } catch (error) {
 
-          hideLoader();
+    hideLoader();
 
-          if (opts.onFailure) {
-            opts.onFailure(error);
-          } else {
-            showToast(error.message);
-          }
+    const message =
+      (error && error.message) ||
+      String(error || 'Something went wrong.');
 
-        }
-      );
+    if (opts.onFailure) {
+      opts.onFailure({
+        message: message
+      });
+    } else {
+      showToast(message);
+    }
 
-  runner[method].apply(
-    runner,
-    args || []
-  );
+  }
 
 }
 
@@ -3755,24 +3787,23 @@ function loadProjects() {
       onSuccess: data => {
 
         if (!data) {
-          document
-            .getElementById('projects')
-            .innerHTML =
-              `<div class="empty">
-                Failed to load entries. Please refresh.
-              </div>`;
+          showProjectsError(
+            'Failed to load entries from the server.'
+          );
+          loadCurrentUser();
           return;
         }
 
         projects =
           data.projects || [];
 
-        currentUser =
-          data.user || null;
-
-        updateUserInfo();
-
-        updateHeaderActions();
+        if (data.user) {
+          currentUser = data.user;
+          updateUserInfo();
+          updateHeaderActions();
+        } else {
+          loadCurrentUser();
+        }
 
         updateStats();
 
@@ -3783,16 +3814,56 @@ function loadProjects() {
       },
       onFailure: error => {
 
-        document
-          .getElementById('projects')
-          .innerHTML =
-            `<div class="empty">
-              ${escapeHtml(error.message)}
-            </div>`;
+        showProjectsError(
+          error.message || 'Failed to load entries.'
+        );
+
+        loadCurrentUser();
 
       }
     }
   );
+
+}
+
+
+function loadCurrentUser() {
+
+  runScript(
+    'getMyUser',
+    [],
+    {
+      message: 'Loading account...',
+      onSuccess: user => {
+
+        currentUser = user || null;
+
+        updateUserInfo();
+
+        updateHeaderActions();
+
+      },
+      onFailure: error => {
+
+        showToast(
+          error.message || 'Could not load your account.'
+        );
+
+      }
+    }
+  );
+
+}
+
+
+function showProjectsError(message) {
+
+  document
+    .getElementById('projects')
+    .innerHTML =
+      `<div class="empty">
+        ${escapeHtml(message)}
+      </div>`;
 
 }
 

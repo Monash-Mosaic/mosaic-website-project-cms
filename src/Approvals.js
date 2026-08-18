@@ -9,9 +9,6 @@ function submitForApproval(versionId) {
 
     const user = requireCreator_();
 
-    const versionsSheet =
-      getSheet_(CONFIG.SHEETS.VERSIONS);
-
     const versions =
       getRowsAsObjects_(CONFIG.SHEETS.VERSIONS);
 
@@ -34,17 +31,26 @@ function submitForApproval(versionId) {
       );
     }
 
-    versionsSheet
-      .getRange(version._row, 9)
-      .setValue(CONFIG.STATUS.PENDING);
+    setSheetValue_(
+      CONFIG.SHEETS.VERSIONS,
+      version._row,
+      'status',
+      CONFIG.STATUS.PENDING
+    );
 
-    versionsSheet
-      .getRange(version._row, 11)
-      .setValue(user.email);
+    setSheetValue_(
+      CONFIG.SHEETS.VERSIONS,
+      version._row,
+      'submittedBy',
+      user.email
+    );
 
-    versionsSheet
-      .getRange(version._row, 12)
-      .setValue(now_());
+    setSheetValue_(
+      CONFIG.SHEETS.VERSIONS,
+      version._row,
+      'submittedAt',
+      now_()
+    );
 
     writeAudit_(
       user.email,
@@ -95,20 +101,26 @@ function approveVersion(versionId) {
       );
     }
 
-    const versionsSheet =
-      getSheet_(CONFIG.SHEETS.VERSIONS);
+    setSheetValue_(
+      CONFIG.SHEETS.VERSIONS,
+      version._row,
+      'status',
+      CONFIG.STATUS.APPROVED
+    );
 
-    versionsSheet
-      .getRange(version._row, 9)
-      .setValue(CONFIG.STATUS.APPROVED);
+    setSheetValue_(
+      CONFIG.SHEETS.VERSIONS,
+      version._row,
+      'approvedBy',
+      user.email
+    );
 
-    versionsSheet
-      .getRange(version._row, 13)
-      .setValue(user.email);
-
-    versionsSheet
-      .getRange(version._row, 14)
-      .setValue(now_());
+    setSheetValue_(
+      CONFIG.SHEETS.VERSIONS,
+      version._row,
+      'approvedAt',
+      now_()
+    );
 
 
     const projects =
@@ -122,24 +134,26 @@ function approveVersion(versionId) {
       throw new Error('Project not found.');
     }
 
-    const projectsSheet =
-      getSheet_(CONFIG.SHEETS.PROJECTS);
-
-
     if (
       version.changeType ===
       CONFIG.CHANGE_TYPE.ARCHIVE
     ) {
 
-      projectsSheet
-        .getRange(project._row, 5)
-        .setValue(true);
+      setSheetValue_(
+        CONFIG.SHEETS.PROJECTS,
+        project._row,
+        'archived',
+        true
+      );
 
     } else {
 
-      projectsSheet
-        .getRange(project._row, 2)
-        .setValue(version.version);
+      setSheetValue_(
+        CONFIG.SHEETS.PROJECTS,
+        project._row,
+        'currentVersion',
+        version.version
+      );
 
     }
 
@@ -205,18 +219,19 @@ function rejectVersion(
       );
     }
 
-    const sheet =
-      getSheet_(CONFIG.SHEETS.VERSIONS);
+    setSheetValue_(
+      CONFIG.SHEETS.VERSIONS,
+      version._row,
+      'status',
+      CONFIG.STATUS.REJECTED
+    );
 
-    sheet
-      .getRange(version._row, 9)
-      .setValue(CONFIG.STATUS.REJECTED);
-
-    sheet
-      .getRange(version._row, 15)
-      .setValue(
-        String(rejectionReason).trim()
-      );
+    setSheetValue_(
+      CONFIG.SHEETS.VERSIONS,
+      version._row,
+      'rejectionReason',
+      String(rejectionReason).trim()
+    );
 
     writeAudit_(
       user.email,

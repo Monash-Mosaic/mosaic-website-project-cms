@@ -274,6 +274,18 @@
 
       },
 
+      getMyUser() {
+
+        loadState()
+          .then(() => {
+            this._resolve(getCurrentUser());
+          })
+          .catch(error => {
+            this._reject(error);
+          });
+
+      },
+
       listUsers() {
 
         loadState()
