@@ -1,0 +1,29 @@
+{
+  "name": "mosaic-website-project-cms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pull": "clasp pull",
+    "push": "clasp push",
+    "status": "clasp status",
+    "open": "clasp open",
+    "deployments": "clasp deployments"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monash-Mosaic/mosaic-website-project-cms.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Monash-Mosaic/mosaic-website-project-cms/issues"
+  },
+  "homepage": "https://github.com/Monash-Mosaic/mosaic-website-project-cms#readme",
+  "devDependencies": {
+    "@google/clasp": "^3.3.0"
+  }
+}

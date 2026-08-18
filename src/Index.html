@@ -1,0 +1,2386 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <base target="_top">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Project CMS</title>
+
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+
+:root {
+
+  --bg: #09090b;
+  --surface: #111113;
+  --surface-hover: #18181b;
+
+  --border: #27272a;
+
+  --text: #fafafa;
+  --muted: #a1a1aa;
+
+  --primary: #7c3aed;
+  --primary-hover: #8b5cf6;
+
+  --danger: #ef4444;
+  --danger-bg: rgba(239,68,68,.10);
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+
+}
+
+
+html,
+body {
+
+  margin: 0;
+  padding: 0;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #18181b 0,
+      #09090b 45%
+    );
+
+  color: var(--text);
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  min-height: 100%;
+
+}
+
+
+body {
+  min-height: 100vh;
+}
+
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+
+
+/* --------------------------------
+   LAYOUT
+-------------------------------- */
+
+
+.app {
+
+  max-width: 1450px;
+
+  margin: auto;
+
+  padding:
+    36px 32px 80px;
+
+}
+
+
+/* --------------------------------
+   HEADER
+-------------------------------- */
+
+
+.header {
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  gap: 24px;
+
+  margin-bottom: 38px;
+
+}
+
+
+.header-title h1 {
+
+  margin: 0;
+
+  font-size: 30px;
+
+  letter-spacing: -.7px;
+
+}
+
+
+.header-title p {
+
+  margin:
+    8px 0 0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    14px;
+
+}
+
+
+.new-button {
+
+  border: none;
+
+  color: white;
+
+  background:
+    var(--primary);
+
+  border-radius:
+    10px;
+
+  padding:
+    12px 18px;
+
+  font-weight:
+    600;
+
+  cursor:
+    pointer;
+
+  transition:
+    .2s ease;
+
+}
+
+
+.new-button:hover {
+
+  background:
+    var(--primary-hover);
+
+  transform:
+    translateY(-1px);
+
+}
+
+
+
+/* --------------------------------
+   SUMMARY
+-------------------------------- */
+
+
+.stats {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap: 14px;
+
+  margin-bottom:
+    34px;
+
+}
+
+
+.stat {
+
+  background:
+    rgba(17,17,19,.8);
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    12px;
+
+  padding:
+    18px;
+
+}
+
+
+.stat-label {
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
+
+}
+
+
+.stat-value {
+
+  font-size:
+    25px;
+
+  font-weight:
+    700;
+
+  margin-top:
+    6px;
+
+}
+
+
+
+/* --------------------------------
+   TOOLBAR
+-------------------------------- */
+
+
+.toolbar {
+
+  display: flex;
+
+  gap: 12px;
+
+  margin-bottom:
+    24px;
+
+}
+
+
+.search {
+
+  flex: 1;
+
+  max-width:
+    420px;
+
+  padding:
+    11px 14px;
+
+  background:
+    var(--surface);
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    9px;
+
+  color:
+    white;
+
+  outline:
+    none;
+
+}
+
+
+.search:focus {
+
+  border-color:
+    #52525b;
+
+}
+
+
+
+/* --------------------------------
+   PROJECT GRID
+-------------------------------- */
+
+
+.projects-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(310px,1fr)
+    );
+
+  gap:
+    22px;
+
+}
+
+
+
+/* --------------------------------
+   PROJECT CARD
+-------------------------------- */
+
+
+.project-card {
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    16px;
+
+  overflow:
+    hidden;
+
+  background:
+    var(--surface);
+
+  transition:
+    .25s ease;
+
+}
+
+
+.project-card:hover {
+
+  border-color:
+    #3f3f46;
+
+  transform:
+    translateY(-2px);
+
+}
+
+
+.project-image {
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  aspect-ratio:
+    16 / 9;
+
+  overflow:
+    hidden;
+
+  background:
+    #18181b;
+
+}
+
+
+.project-image img {
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  display:
+    block;
+
+}
+
+
+.status {
+
+  position:
+    absolute;
+
+  top:
+    13px;
+
+  left:
+    13px;
+
+  padding:
+    6px 9px;
+
+  border-radius:
+    100px;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  backdrop-filter:
+    blur(10px);
+
+}
+
+
+.status-approved {
+
+  background:
+    rgba(34,197,94,.18);
+
+  color:
+    #86efac;
+
+}
+
+
+.status-draft {
+
+  background:
+    rgba(161,161,170,.22);
+
+  color:
+    #e4e4e7;
+
+}
+
+
+.status-pending {
+
+  background:
+    rgba(245,158,11,.18);
+
+  color:
+    #fcd34d;
+
+}
+
+
+.status-rejected {
+
+  background:
+    rgba(239,68,68,.18);
+
+  color:
+    #fca5a5;
+
+}
+
+
+
+.project-body {
+
+  padding:
+    19px;
+
+}
+
+
+.project-name {
+
+  font-size:
+    18px;
+
+  font-weight:
+    650;
+
+  margin-bottom:
+    9px;
+
+}
+
+
+.project-description {
+
+  color:
+    var(--muted);
+
+  line-height:
+    1.55;
+
+  font-size:
+    14px;
+
+  height:
+    65px;
+
+  overflow:
+    hidden;
+
+}
+
+
+.project-link {
+
+  display:
+    inline-block;
+
+  margin-top:
+    15px;
+
+  color:
+    #c4b5fd;
+
+  font-size:
+    13px;
+
+  text-decoration:
+    none;
+
+}
+
+
+.project-link:hover {
+  text-decoration:
+    underline;
+}
+
+
+.card-actions {
+
+  display:
+    flex;
+
+  gap:
+    8px;
+
+  margin-top:
+    20px;
+
+}
+
+
+.action-button {
+
+  flex:
+    1;
+
+  padding:
+    9px;
+
+  border-radius:
+    8px;
+
+  cursor:
+    pointer;
+
+  border:
+    1px solid
+    var(--border);
+
+  background:
+    #18181b;
+
+  color:
+    #e4e4e7;
+
+}
+
+
+.action-button:hover {
+
+  background:
+    #27272a;
+
+}
+
+
+.action-button-danger {
+
+  color:
+    #fca5a5;
+
+}
+
+
+.submit-button {
+
+  color:
+    #c4b5fd;
+
+}
+
+
+
+/* --------------------------------
+   DRAWER OVERLAY
+-------------------------------- */
+
+
+.overlay {
+
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  background:
+    rgba(0,0,0,.65);
+
+  backdrop-filter:
+    blur(4px);
+
+  opacity:
+    0;
+
+  pointer-events:
+    none;
+
+  transition:
+    .25s;
+
+  z-index:
+    90;
+
+}
+
+
+.overlay.active {
+
+  opacity:
+    1;
+
+  pointer-events:
+    auto;
+
+}
+
+
+
+/* --------------------------------
+   DRAWER
+-------------------------------- */
+
+
+.drawer {
+
+  position:
+    fixed;
+
+  right:
+    -520px;
+
+  top:
+    0;
+
+  bottom:
+    0;
+
+  width:
+    min(500px,100%);
+
+  background:
+    #101012;
+
+  border-left:
+    1px solid
+    var(--border);
+
+  z-index:
+    100;
+
+  transition:
+    right .3s ease;
+
+  overflow-y:
+    auto;
+
+}
+
+
+.drawer.active {
+
+  right:
+    0;
+
+}
+
+
+.drawer-header {
+
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  padding:
+    25px;
+
+  border-bottom:
+    1px solid
+    var(--border);
+
+}
+
+
+.drawer-header h2 {
+
+  margin:
+    0;
+
+  font-size:
+    21px;
+
+}
+
+
+.close-button {
+
+  width:
+    36px;
+
+  height:
+    36px;
+
+  border-radius:
+    8px;
+
+  border:
+    1px solid
+    var(--border);
+
+  background:
+    #18181b;
+
+  color:
+    white;
+
+  cursor:
+    pointer;
+
+}
+
+
+.drawer-content {
+
+  padding:
+    25px;
+
+}
+
+
+
+/* --------------------------------
+   FORM
+-------------------------------- */
+
+
+.form-group {
+
+  margin-bottom:
+    21px;
+
+}
+
+
+.form-group label {
+
+  display:
+    block;
+
+  margin-bottom:
+    8px;
+
+  font-size:
+    13px;
+
+  font-weight:
+    600;
+
+}
+
+
+.form-control {
+
+  width:
+    100%;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    9px;
+
+  background:
+    #18181b;
+
+  color:
+    white;
+
+  padding:
+    12px;
+
+  outline:
+    none;
+
+}
+
+
+.form-control:focus {
+
+  border-color:
+    var(--primary);
+
+}
+
+
+textarea.form-control {
+
+  min-height:
+    130px;
+
+  resize:
+    vertical;
+
+}
+
+
+.help-text {
+
+  font-size:
+    12px;
+
+  color:
+    var(--muted);
+
+  margin-top:
+    6px;
+
+}
+
+
+.image-preview {
+
+  width:
+    100%;
+
+  aspect-ratio:
+    16/9;
+
+  background:
+    #18181b;
+
+  border:
+    1px dashed
+    #3f3f46;
+
+  border-radius:
+    10px;
+
+  overflow:
+    hidden;
+
+  margin-top:
+    12px;
+
+  display:
+    none;
+
+}
+
+
+.image-preview img {
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+}
+
+
+.form-button {
+
+  width:
+    100%;
+
+  padding:
+    13px;
+
+  border:
+    none;
+
+  border-radius:
+    9px;
+
+  background:
+    var(--primary);
+
+  color:
+    white;
+
+  font-weight:
+    650;
+
+  cursor:
+    pointer;
+
+}
+
+
+.form-button:hover {
+
+  background:
+    var(--primary-hover);
+
+}
+
+
+
+/* --------------------------------
+   LOADING
+-------------------------------- */
+
+
+.loading {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-height:
+    300px;
+
+  color:
+    var(--muted);
+
+}
+
+
+
+/* --------------------------------
+   EMPTY
+-------------------------------- */
+
+
+.empty {
+
+  grid-column:
+    1 / -1;
+
+  padding:
+    80px 20px;
+
+  text-align:
+    center;
+
+  border:
+    1px dashed
+    var(--border);
+
+  border-radius:
+    14px;
+
+  color:
+    var(--muted);
+
+}
+
+
+
+/* --------------------------------
+   TOAST
+-------------------------------- */
+
+
+.toast {
+
+  position:
+    fixed;
+
+  bottom:
+    25px;
+
+  left:
+    50%;
+
+  transform:
+    translate(-50%,20px);
+
+  background:
+    #27272a;
+
+  border:
+    1px solid
+    #3f3f46;
+
+  padding:
+    12px 18px;
+
+  border-radius:
+    9px;
+
+  opacity:
+    0;
+
+  pointer-events:
+    none;
+
+  z-index:
+    200;
+
+  transition:
+    .25s;
+
+}
+
+
+.toast.active {
+
+  opacity:
+    1;
+
+  transform:
+    translate(-50%,0);
+
+}
+
+
+
+/* --------------------------------
+   RESPONSIVE
+-------------------------------- */
+
+
+@media(max-width:800px) {
+
+  .app {
+    padding:
+      25px 18px 60px;
+  }
+
+  .header {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+  }
+
+  .stats {
+
+    grid-template-columns:
+      repeat(2,1fr);
+
+  }
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+  <header class="header">
+
+    <div class="header-title">
+
+      <h1>Projects</h1>
+
+      <p>
+        Manage projects displayed on your website.
+      </p>
+
+    </div>
+
+
+    <button
+      class="new-button"
+      onclick="openCreateDrawer()"
+    >
+
+      + New Project
+
+    </button>
+
+  </header>
+
+
+
+  <section class="stats">
+
+    <div class="stat">
+      <div class="stat-label">
+        Total Projects
+      </div>
+
+      <div
+        class="stat-value"
+        id="totalCount"
+      >
+        —
+      </div>
+    </div>
+
+
+    <div class="stat">
+      <div class="stat-label">
+        Live
+      </div>
+
+      <div
+        class="stat-value"
+        id="liveCount"
+      >
+        —
+      </div>
+    </div>
+
+
+    <div class="stat">
+      <div class="stat-label">
+        Draft
+      </div>
+
+      <div
+        class="stat-value"
+        id="draftCount"
+      >
+        —
+      </div>
+    </div>
+
+
+    <div class="stat">
+      <div class="stat-label">
+        Pending Approval
+      </div>
+
+      <div
+        class="stat-value"
+        id="pendingCount"
+      >
+        —
+      </div>
+    </div>
+
+  </section>
+
+
+
+  <section class="toolbar">
+
+    <input
+      type="search"
+      id="search"
+      class="search"
+      placeholder="Search projects..."
+      oninput="renderProjects()"
+    >
+
+  </section>
+
+
+
+  <div
+    id="projects"
+    class="projects-grid"
+  >
+
+    <div class="loading">
+      Loading projects...
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- OVERLAY -->
+
+<div
+  id="overlay"
+  class="overlay"
+  onclick="closeDrawer()"
+></div>
+
+
+
+<!-- DRAWER -->
+
+<aside
+  id="drawer"
+  class="drawer"
+>
+
+  <div class="drawer-header">
+
+    <h2 id="drawerTitle">
+      New Project
+    </h2>
+
+    <button
+      class="close-button"
+      onclick="closeDrawer()"
+    >
+      ✕
+    </button>
+
+  </div>
+
+
+  <div class="drawer-content">
+
+
+    <form
+      id="projectForm"
+      onsubmit="
+        submitProject(this);
+        return false;
+      "
+    >
+
+
+      <input
+        type="hidden"
+        name="projectId"
+        id="projectId"
+      >
+
+
+
+      <div class="form-group">
+
+        <label>
+          Project Name
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          id="name"
+          required
+        >
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label>
+          Description
+        </label>
+
+        <textarea
+          class="form-control"
+          name="description"
+          id="description"
+          required
+        ></textarea>
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label>
+          Project Image
+        </label>
+
+        <input
+          type="file"
+          class="form-control"
+          name="image"
+          id="image"
+          accept=".webp,image/webp"
+          onchange="previewImage(this)"
+        >
+
+        <div class="help-text">
+
+          WebP only. Recommended:
+          1600 × 900.
+
+        </div>
+
+
+        <div
+          id="imagePreview"
+          class="image-preview"
+        >
+
+          <img id="previewImg">
+
+        </div>
+
+      </div>
+
+
+
+      <div class="form-group">
+
+        <label>
+          Project Link
+        </label>
+
+        <input
+          type="url"
+          class="form-control"
+          name="link"
+          id="link"
+          placeholder="https://..."
+          required
+        >
+
+      </div>
+
+
+
+      <button
+        type="submit"
+        class="form-button"
+        id="saveButton"
+      >
+
+        Save Draft
+
+      </button>
+
+
+    </form>
+
+  </div>
+
+</aside>
+
+
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+
+<script>
+
+
+let projects = [];
+
+let editMode = false;
+
+
+
+/* -------------------------
+   INITIAL LOAD
+------------------------- */
+
+
+document.addEventListener(
+  'DOMContentLoaded',
+  loadProjects
+);
+
+
+
+function loadProjects() {
+
+  google.script.run
+
+    .withSuccessHandler(
+      data => {
+
+        projects =
+          data.projects || [];
+
+        updateStats();
+
+        renderProjects();
+
+      }
+    )
+
+    .withFailureHandler(
+      error => {
+
+        document
+          .getElementById('projects')
+          .innerHTML =
+            `<div class="empty">
+              ${escapeHtml(error.message)}
+            </div>`;
+
+      }
+    )
+
+    .getDashboardProjects();
+
+}
+
+
+
+/* -------------------------
+   STATS
+------------------------- */
+
+
+function updateStats() {
+
+  document.getElementById(
+    'totalCount'
+  ).innerText =
+    projects.length;
+
+
+  document.getElementById(
+    'liveCount'
+  ).innerText =
+    projects.filter(
+      p => p.isLive
+    ).length;
+
+
+  document.getElementById(
+    'draftCount'
+  ).innerText =
+    projects.filter(
+      p =>
+        p.status === 'DRAFT' ||
+        p.status === 'REJECTED'
+    ).length;
+
+
+  document.getElementById(
+    'pendingCount'
+  ).innerText =
+    projects.filter(
+      p =>
+        p.status ===
+        'PENDING_APPROVAL'
+    ).length;
+
+}
+
+
+
+/* -------------------------
+   RENDER PROJECTS
+------------------------- */
+
+
+function renderProjects() {
+
+  const container =
+    document.getElementById(
+      'projects'
+    );
+
+
+  const query =
+    document
+      .getElementById('search')
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const filtered =
+    projects.filter(
+      project => {
+
+        return (
+
+          project.name
+            .toLowerCase()
+            .includes(query)
+
+          ||
+
+          project.description
+            .toLowerCase()
+            .includes(query)
+
+        );
+
+      }
+    );
+
+
+  if (!filtered.length) {
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        No projects found.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    filtered
+      .map(project =>
+        createProjectCard(project)
+      )
+      .join('');
+
+}
+
+
+
+/* -------------------------
+   CARD
+------------------------- */
+
+
+function createProjectCard(project) {
+
+  const statusClass =
+    getStatusClass(
+      project.status
+    );
+
+
+  const statusText =
+    getStatusText(
+      project.status
+    );
+
+
+  const pending =
+    project.status ===
+      'PENDING_APPROVAL';
+
+
+  const canSubmit =
+    project.status === 'DRAFT' ||
+    project.status === 'REJECTED';
+
+
+  return `
+
+    <article class="project-card">
+
+
+      <div class="project-image">
+
+        ${
+          project.imageUrl
+
+          ?
+
+          `
+          <img
+            src="${escapeHtml(project.imageUrl)}"
+            alt="${escapeHtml(project.name)}"
+          >
+          `
+
+          :
+
+          ''
+        }
+
+
+        <span
+          class="status ${statusClass}"
+        >
+
+          ${statusText}
+
+        </span>
+
+      </div>
+
+
+
+      <div class="project-body">
+
+
+        <div class="project-name">
+
+          ${escapeHtml(project.name)}
+
+        </div>
+
+
+        <div class="project-description">
+
+          ${escapeHtml(
+            project.description
+          )}
+
+        </div>
+
+
+        <a
+          class="project-link"
+          href="${escapeHtml(project.link)}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          Open project ↗
+
+        </a>
+
+
+
+        <div class="card-actions">
+
+
+          <button
+            class="action-button"
+
+            onclick="
+              openEditDrawer(
+                '${project.projectId}'
+              )
+            "
+
+            ${pending ? 'disabled' : ''}
+          >
+
+            Update
+
+          </button>
+
+
+
+          ${
+            canSubmit
+
+            ?
+
+            `
+
+            <button
+              class="
+                action-button
+                submit-button
+              "
+
+              onclick="
+                submitVersion(
+                  '${project.latestVersionId}'
+                )
+              "
+            >
+
+              Submit
+
+            </button>
+
+            `
+
+            :
+
+            ''
+          }
+
+
+
+          <button
+            class="
+              action-button
+              action-button-danger
+            "
+
+            onclick="
+              archiveProject(
+                '${project.projectId}',
+                '${escapeJs(project.name)}'
+              )
+            "
+
+            ${pending ? 'disabled' : ''}
+          >
+
+            Archive
+
+          </button>
+
+
+        </div>
+
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+
+/* -------------------------
+   STATUS
+------------------------- */
+
+
+function getStatusClass(status) {
+
+  switch(status) {
+
+    case 'APPROVED':
+      return 'status-approved';
+
+    case 'PENDING_APPROVAL':
+      return 'status-pending';
+
+    case 'REJECTED':
+      return 'status-rejected';
+
+    default:
+      return 'status-draft';
+
+  }
+
+}
+
+
+function getStatusText(status) {
+
+  switch(status) {
+
+    case 'APPROVED':
+      return '● LIVE';
+
+    case 'PENDING_APPROVAL':
+      return '● PENDING';
+
+    case 'REJECTED':
+      return '● REJECTED';
+
+    default:
+      return '● DRAFT';
+
+  }
+
+}
+
+
+
+/* -------------------------
+   CREATE DRAWER
+------------------------- */
+
+
+function openCreateDrawer() {
+
+  editMode = false;
+
+
+  document.getElementById(
+    'drawerTitle'
+  ).innerText =
+    'New Project';
+
+
+  document.getElementById(
+    'saveButton'
+  ).innerText =
+    'Save Draft';
+
+
+  const form =
+    document.getElementById(
+      'projectForm'
+    );
+
+  form.reset();
+
+
+  document.getElementById(
+    'projectId'
+  ).value = '';
+
+
+  document.getElementById(
+    'image'
+  ).required = true;
+
+
+  hidePreview();
+
+  openDrawer();
+
+}
+
+
+
+/* -------------------------
+   EDIT DRAWER
+------------------------- */
+
+
+function openEditDrawer(
+  projectId
+) {
+
+  const project =
+    projects.find(
+      p =>
+        p.projectId ===
+        projectId
+    );
+
+
+  if (!project) {
+    return;
+  }
+
+
+  editMode = true;
+
+
+  document.getElementById(
+    'drawerTitle'
+  ).innerText =
+    'Update Project';
+
+
+  document.getElementById(
+    'saveButton'
+  ).innerText =
+    'Save Update Draft';
+
+
+  document.getElementById(
+    'projectId'
+  ).value =
+    project.projectId;
+
+
+  document.getElementById(
+    'name'
+  ).value =
+    project.name;
+
+
+  document.getElementById(
+    'description'
+  ).value =
+    project.description;
+
+
+  document.getElementById(
+    'link'
+  ).value =
+    project.link;
+
+
+  document.getElementById(
+    'image'
+  ).value = '';
+
+
+  document.getElementById(
+    'image'
+  ).required =
+    false;
+
+
+  if (project.imageUrl) {
+
+    document.getElementById(
+      'previewImg'
+    ).src =
+      project.imageUrl;
+
+
+    document.getElementById(
+      'imagePreview'
+    ).style.display =
+      'block';
+
+  }
+
+
+  openDrawer();
+
+}
+
+
+
+/* -------------------------
+   DRAWER
+------------------------- */
+
+
+function openDrawer() {
+
+  document.getElementById(
+    'drawer'
+  ).classList.add(
+    'active'
+  );
+
+
+  document.getElementById(
+    'overlay'
+  ).classList.add(
+    'active'
+  );
+
+}
+
+
+function closeDrawer() {
+
+  document.getElementById(
+    'drawer'
+  ).classList.remove(
+    'active'
+  );
+
+
+  document.getElementById(
+    'overlay'
+  ).classList.remove(
+    'active'
+  );
+
+}
+
+
+
+/* -------------------------
+   IMAGE PREVIEW
+------------------------- */
+
+
+function previewImage(input) {
+
+  const file =
+    input.files[0];
+
+
+  if (!file) {
+    return;
+  }
+
+
+  if (
+    file.type !== 'image/webp'
+    ||
+    !file.name
+      .toLowerCase()
+      .endsWith('.webp')
+  ) {
+
+    showToast(
+      'Only WebP images are allowed.'
+    );
+
+    input.value = '';
+
+    return;
+
+  }
+
+
+  const url =
+    URL.createObjectURL(file);
+
+
+  document.getElementById(
+    'previewImg'
+  ).src =
+    url;
+
+
+  document.getElementById(
+    'imagePreview'
+  ).style.display =
+    'block';
+
+}
+
+
+function hidePreview() {
+
+  document.getElementById(
+    'imagePreview'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'previewImg'
+  ).src = '';
+
+}
+
+
+
+/* -------------------------
+   SAVE CREATE / UPDATE
+------------------------- */
+
+
+function submitProject(form) {
+
+  const button =
+    document.getElementById(
+      'saveButton'
+    );
+
+
+  const imageInput =
+    document.getElementById(
+      'image'
+    );
+
+
+  if (!editMode) {
+
+    const file =
+      imageInput.files[0];
+
+
+    if (!file) {
+
+      showToast(
+        'A WebP image is required.'
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  if (imageInput.files.length) {
+
+    const file =
+      imageInput.files[0];
+
+
+    if (
+      file.type !== 'image/webp'
+      ||
+      !file.name
+        .toLowerCase()
+        .endsWith('.webp')
+    ) {
+
+      showToast(
+        'Only WebP images are allowed.'
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  button.disabled =
+    true;
+
+
+  button.innerText =
+    'Saving...';
+
+
+  const runner =
+    google.script.run
+
+      .withSuccessHandler(
+        () => {
+
+          closeDrawer();
+
+          showToast(
+            editMode
+              ? 'Update saved as draft.'
+              : 'Project created as draft.'
+          );
+
+          button.disabled =
+            false;
+
+          loadProjects();
+
+        }
+      )
+
+      .withFailureHandler(
+        error => {
+
+          showToast(
+            error.message
+          );
+
+          button.disabled =
+            false;
+
+          button.innerText =
+            editMode
+              ? 'Save Update Draft'
+              : 'Save Draft';
+
+        }
+      );
+
+
+  if (editMode) {
+
+    runner.updateProject(
+      form
+    );
+
+  } else {
+
+    runner.createProject(
+      form
+    );
+
+  }
+
+}
+
+
+
+/* -------------------------
+   SUBMIT APPROVAL
+------------------------- */
+
+
+function submitVersion(
+  versionId
+) {
+
+  if (
+    !confirm(
+      'Submit this project for approval?'
+    )
+  ) {
+    return;
+  }
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      () => {
+
+        showToast(
+          'Submitted for approval.'
+        );
+
+        loadProjects();
+
+      }
+    )
+
+    .withFailureHandler(
+      error =>
+        showToast(
+          error.message
+        )
+    )
+
+    .submitForApproval(
+      versionId
+    );
+
+}
+
+
+
+/* -------------------------
+   ARCHIVE
+------------------------- */
+
+
+function archiveProject(
+  projectId,
+  projectName
+) {
+
+  const confirmed =
+    confirm(
+      `Request archive for "${projectName}"?\n\n` +
+      `The project will remain live until the archive request is approved.`
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      () => {
+
+        showToast(
+          'Archive request submitted.'
+        );
+
+        loadProjects();
+
+      }
+    )
+
+    .withFailureHandler(
+      error =>
+        showToast(
+          error.message
+        )
+    )
+
+    .requestArchive(
+      projectId
+    );
+
+}
+
+
+
+/* -------------------------
+   TOAST
+------------------------- */
+
+
+let toastTimer;
+
+
+function showToast(message) {
+
+  const toast =
+    document.getElementById(
+      'toast'
+    );
+
+
+  toast.innerText =
+    message;
+
+
+  toast.classList.add(
+    'active'
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          'active'
+        );
+
+      },
+      3200
+    );
+
+}
+
+
+
+/* -------------------------
+   SECURITY
+------------------------- */
+
+
+function escapeHtml(value) {
+
+  return String(value || '')
+
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+
+    .replace(
+      /</g,
+      '&lt;'
+    )
+
+    .replace(
+      />/g,
+      '&gt;'
+    )
+
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+
+    .replace(
+      /'/g,
+      '&#039;'
+    );
+
+}
+
+
+function escapeJs(value) {
+
+  return String(value || '')
+
+    .replace(
+      /\\/g,
+      '\\\\'
+    )
+
+    .replace(
+      /'/g,
+      "\\'"
+    )
+
+    .replace(
+      /\n/g,
+      '\\n'
+    );
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
